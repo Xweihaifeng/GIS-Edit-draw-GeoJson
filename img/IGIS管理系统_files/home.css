@@ -1,0 +1,79 @@
+/* 服务按钮操作开始 */
+span { display: inline-block }
+.service-action { display: flex; justify-content: flex-end; align-items: center; margin-top: 0.5rem }
+.service-action a { width: 18px; height: 18px; font-size: 18px; display: inline-block; color: #5993ad; text-decoration: none }
+.service-action a:nth-child(1) { line-height: 17px; font-size: 16px }
+.service-action a:nth-child(2) { line-height: 18px; font-size: 16px }
+.service-action a:nth-child(3) { line-height: 18px }
+.service-action a:link { color: #5993ad; text-decoration: none }
+.service-action a:visited { color: #5d5ab3; text-decoration: none }
+.service-action a:hover { color: #ff7f24; text-decoration: underline }
+.service-action a:active { color: #ff0000; text-decoration: underline }
+.page_pagination { position: absolute; bottom: 0 }
+
+/* 切片开始 */
+.cutting_button { padding: 0 20px }
+.cutting_button li { margin: 5px 0; display: flex; justify-content: flex-start; align-items: center }
+.cutting_button li input[type=number] { -moz-appearance: textfield }
+.cutting_button li input[type=number]::-webkit-inner-spin-button, .cutting_button li input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0 }
+.cutting_button li select { appearance: menulist; -webkit-appearance: menulist; -moz-appearance: menulist }
+.cutting_button li input, .cutting_button li select { width: 180px; line-height: 18px; max-height: 30px; padding: 5px; border: 1px solid #bbb; border-radius: 3px; outline: none }
+.cutting_button li label { width: 100px }
+.cutting_button li > div { display: flex }
+.cutting_button li > div > input { width: 120px; text-align: center; border-radius: 0; border-left: none; border-right: none }
+.cutting_button li > div > button { width: 30px; height: 30px; margin: 0; vertical-align: middle; border: 1px solid #bbb; outline: none; cursor: pointer }
+.cutting_button li > div > button:first-child { border-radius: 3px 0 0 3px }
+.cutting_button li > div > button:last-child { border-radius: 0 3px 3px 0 }
+.cutting_button li input[name=service] { width: 100px; background-color: #409eff; border: 1px solid #409eff; color: #fff; margin: 0 0 0 100px; cursor: pointer }
+
+/* 服务编辑公用部分 */
+#currServiceBox { position: fixed; width: 88%; height: 96%; top: 2%; right: 6%; bottom: 2%; left: 6%; border-radius: 3px; background: #ffffff; z-index: 999 }
+#currServiceBox > div { position: relative; width: 100%; height: 100%; background-color: #fff; border: 1px solid #fff; z-index: 1000 }
+#currServiceBox > aside { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0, 0, 0, .5); z-index: 999 }
+#currServiceBox .openMsg { display: none; position: absolute; z-index: 1000; background: rgba(0, 0, 0, 0.4); font-size: 15px; color: #fff; padding: 5px 20px; transform: translate(-50%, 0%); left: 50%; top: 127px; line-height: 25px; border: 2px solid #00000000; border-radius: 30px; box-shadow: white 0px 0px 0px 1px inset }
+.currServiceBox-header { position: absolute; top: 0; width: 100%; height: 50px; background: #32c787; font-size: 16px; text-indent: 2em; line-height: 50px; color: #fff }
+.currServiceBox-header .currServiceBox-close { width: 50px; height: 50px; float: right; text-indent: 0; display: inline-flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; cursor: pointer; border: none }
+.currServiceBox-footer { position: absolute; bottom: 0; width: 100%; height: 50px; background: #eaeaea; display: flex; justify-content: center; align-items: center }
+.currServiceBox-footer .currServiceBox-submit { width: 80px; padding: 0.5rem 1rem; background-color: #32c787; color: #fff; cursor: pointer; border: none; border-radius: 3px; margin-right: 1.5rem }
+.currServiceBox-footer .currServiceBox-close { width: 80px; padding: 0.5rem 1rem; background-color: #ff7f7f; color: #fff; cursor: pointer; border: none; border-radius: 3px; margin-right: 1.5rem }
+.currServiceBox-content { position: absolute; top: 50px; bottom: 50px; left: 0; right: 0; overflow: hidden; margin: 10px auto }
+.currServiceBox-content #currServiceBoxContent { position: relative; width: 100%; height: 100%; overflow: hidden; overflow-y: auto; padding: 0 30px }
+
+/* 服务编辑内容部分 - 弹出层details开始 */
+#currServiceBoxContent details.detailsx1 { position: relative; margin-left: 20px }
+#currServiceBoxContent details.detailsx1::before { position: absolute; content: ''; width: 1px; height: calc(100% - 30px); top: 20px; left: 5px; border-left: 1px dashed #ccc }
+#currServiceBoxContent details.detailsx2 { margin-left: 40px }
+#currServiceBoxContent details.detailsx3 { margin-left: 60px }
+#currServiceBoxContent details.detailsx4 { margin-left: 80px }
+#currServiceBoxContent details.detailsx1 input[type=number] { -moz-appearance: textfield }
+#currServiceBoxContent details.detailsx1 input[type=number]::-webkit-inner-spin-button, #currServiceBoxContent details.detailsx1 input[type=number]::-webkit-outer-spin-button { -webkit-appearance: inner-spin-button; margin: 0 }
+#currServiceBoxContent details.detailsx1 select { appearance: menulist; -webkit-appearance: menulist; -moz-appearance: menulist }
+#currServiceBoxContent summary { display: inline-flex; align-items: center; font-size: 15px; font-weight: 600; cursor: pointer }
+#currServiceBoxContent summary button:first-child, .addRow { background-color: #70d0a7; width: 18px; height: 18px; line-height: 18px; font-size: 22px; margin-left: 15px; padding: 0; border: none; border-radius: 50%; cursor: pointer; color: #fff; display: inline-flex; justify-content: center; align-items: center }
+#currServiceBoxContent summary button:last-child, .delRow { background-color: #f59a9a; width: 18px; height: 18px; line-height: 18px; font-size: 22px; margin-left: 2px; padding: 0; border: none; border-radius: 50%; cursor: pointer; color: #fff; display: inline-flex; justify-content: center; align-items: center }
+#currServiceBoxContent .sub-list { display: flex; flex-wrap: wrap; margin-left: 15px }
+#currServiceBoxContent .sub-list .symbolName-imgbox { display: none; position: fixed; width: 334px; height: 300px; transform: translate(-50%, -50%); left: 50%; top: 50%; border: 1000px solid rgba(0, 0, 0, 0.2); box-shadow: inset 0 0 0 1000px #fff; z-index: 100001 }
+#currServiceBoxContent .sub-list .symbolName-imgbox .symbolName-title { height: 35px; display: flex; justify-content: space-between; align-items: center; padding: 0 0 0 15px; border-bottom: 1px solid #ccc; font-size: 16px }
+#currServiceBoxContent .sub-list .symbolName-imgbox .symbolName-title .symbolName-close { width: 35px; height: 35px; text-align: center; line-height: 35px; transition: .8s; font-size: 28px; font-weight: 100; cursor: pointer }
+#currServiceBoxContent .sub-list .symbolName-imgbox .symbolName-title .symbolName-close:hover { transform: rotate(180deg); color: #f00 }
+#currServiceBoxContent .sub-list .symbolName-imgbox .symbolName-cont { height: calc(300px - 56px); overflow: hidden; overflow-y: auto; margin: 10px 0; padding: 0 15px }
+#currServiceBoxContent .sub-list .symbolName-imgbox .symbolName-cont img { width: 30px; height: 32px; padding: 4px }
+#currServiceBoxContent .sub-list .sub-list-li { display: inline-flex; align-items: center; margin: 5px 15px 5px 0 }
+#currServiceBoxContent .sub-list .sub-list-li hgroup { margin: 2px 0; display: flex; align-items: center }
+#currServiceBoxContent .sub-list .sub-list-li hgroup > input { margin: 0px 2px }
+#currServiceBoxContent .sub-list .sub-list-li hgroup > span { display: inline-block; margin-right: 2px; text-align: center }
+#currServiceBoxContent .sub-list .sub-list-li mark { background: transparent; font-size: 14px; color: #606266; padding: 0 5px; display: inline-block }
+#currServiceBoxContent .sub-list .sub-list-li input, #currServiceBoxContent .sub-list .sub-list-li select { height: 25px; display: inline-flex; justify-content: flex-start; align-items: center; background: #fff; border: 1px solid #bbb; border-radius: 3px; padding: 0 5px; font-size: 12px }
+#currServiceBoxContent .sub-list .sub-list-li .sp-replacer { padding: 0; border: none; background: none }
+#currServiceBoxContent .sub-list .sub-list-li .sp-replacer .sp-preview { width: 30px; border: solid 1px #bbb; border-radius: 3px }
+#currServiceBoxContent .sub-list .sub-list-li .sp-replacer .sp-dd { display: none }
+
+/* 服务编辑内容部分 - 开关按钮开始 */
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn { cursor: pointer; width: 45px; height: 20px; padding: 0; position: relative; border: 1px solid #bbb; background-color: #fdfdfd; box-shadow: #bbb 0 0 0 0 inset; border-radius: 15px; background-clip: content-box; display: inline-block; -webkit-appearance: none; user-select: none; outline: none }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn:before { content: ''; width: 18px; height: 18px; position: absolute; top: 0; left: 0; border-radius: 20px; background-color: #fff; box-shadow: 0px 0px 2px rgba(0, 0, 0, .7) }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn:checked { border-color: #32c787; box-shadow: #32c787 0 0 0 16px inset; background-color: #32c787 }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn:checked:before { left: 25px }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn.switch-btn-animbg { transition: background-color ease .4s }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn.switch-btn-animbg:before { transition: left .3s }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn.switch-btn-animbg:checked { box-shadow: #bbb 0 0 0 0 inset; background-color: #32c787; transition: border-color .4s, background-color ease .4s }
+#currServiceBoxContent .sub-list .sub-list-li input.switch-btn.switch-btn-animbg:checked:before { transition: left .3s }

@@ -1,0 +1,260 @@
+var serviceData = new Object();
+var currentService = new Object();
+var layerData = new Object();
+var serviceList = new Array();
+var size = 12;     //每页多少条
+var pages = null;  //总页数
+var total = null;   //总共多少条数据
+var currPage = null;
+
+/*时间戳转时间*/
+function getDate(tm) {
+    return new Date(tm * 1000).toLocaleString();
+}
+
+
+/****************************************************/
+$(function () {
+    $.ajaxSettings.async = false;
+    $(".main-content").append('<div class="modal fade" id="service_layer_detail" data-keyboard="false" data-backdrop="static" tabindex="-1"></div><div id="page_pagination" class="page_pagination"></div>');
+    getGisService(1, size);
+    new Page({
+        id: 'page_pagination',
+        pageTotal: pages,  //必填,总页数
+        pageAmount: size,   //每页多少条
+        dataTotal: total,    //总共多少条数据
+        curPage: 1,           //初始页码,不填默认为1
+        pageSize: 5,           //分页个数,不填默认为5
+        showPageTotalFlag:true, //是否显示数据统计,不填默认不显示
+        showSkipInputFlag:true,  //是否支持跳转,不填默认不显示
+        getPage: function (page) {
+            //获取当前页数
+        	currPage = page;
+            getGisService(page, this.pageAmount);
+        }
+    })
+});
+
+/*获取服务列表*/
+function getGisService(page, size) {
+    $.get(ctx + 'gisService/list', {pageNum:page,pageSize:size}, function(res) {
+        if(!res) return false;
+        var data = JSON.parse(res);
+        if(data.status === 500) return false;
+        pages = data.data.pages;
+        total = data.data.total;
+
+        if (data.resultCode === 1) {
+            var movie_list = data.data.list;
+            serviceList = movie_list;
+            var movie_list_html = '';
+            for (var i = 0; i < movie_list.length; i++) {
+                movie_list_html += '<div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6">';
+                movie_list_html +=   '<div class="groups__item">';
+                movie_list_html +=     '<li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(\'' + movie_list[i].serviceId + '\')"></li>';
+                movie_list_html +=     '<div class="groups__info">';
+                movie_list_html +=       '<h3 title="'+ movie_list[i].serviceName +'">' + movie_list[i].serviceName + '</h3>';
+                movie_list_html +=       '<div class="widget-service-type-epsg">类型：'+ movie_list[i].serviceType +'&ensp;坐标系：'+ movie_list[i].srid +'</div>';
+                movie_list_html +=     '</div>';
+                movie_list_html +=     '<div class="service-action">';
+                movie_list_html +=       '<a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(\'' + movie_list[i].serviceName + '\')">▶</a>';
+                movie_list_html +=       '<a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(\'' + movie_list[i].serviceId + '\')">✎</a>';
+                movie_list_html +=       '<a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(\''+ movie_list[i].serviceName +'\',\''+ movie_list[i].serviceType +'\');">&times;</a>';
+                movie_list_html +=     '</div>';
+                movie_list_html +=   '</div>';
+                movie_list_html += '</div>';
+
+                serviceData[movie_list[i].serviceId] = serviceObjectToChange(movie_list[i]);
+            }
+            $(".card-block").html("").append(movie_list_html);
+            $(".groups__item").each(function () {
+                var $this = $(this);
+                $this.mouseenter(function () {
+                    $this.find(".movie-action").show();
+                });
+                $this.mouseleave(function () {
+                    $this.find(".movie-action").hide();
+                });
+            });
+        } else {
+            $MB.n_danger(data.msg);
+        }
+    });
+}
+
+/*获取单条服务详情*/
+function getMoiveDetail(name) {
+    var service_list_html  = '<div class="modal-dialog modal-lg"><div class="modal-content">';
+        service_list_html +=   '<div class="modal-header"><h3 class="modal-title pull-left" id="movie-detail-modal-title">服务详情</h3></div>';
+        service_list_html +=   '<div class="modal-body">';
+        service_list_html +=     '<div class="profile">';
+        service_list_html +=       '<div class="profile__img"><img id="layerImg"  alt=""></div>';
+        service_list_html +=       '<div class="profile__info"><ul class="icon-list"><li id="serviceName"></li><li id="serviceType"></li><li id="centerPoint"></li><li id="serviceUrl"></li><li id="serviceId"></li></ul></div>';
+        service_list_html +=     '</div>';
+        service_list_html +=     '<div style="padding-top:1.5rem"><h3 class="modal-title">服务列表</h3><p id="mapFilePath"></p></div>';
+        service_list_html +=     '<div class="modal-footer" style="padding-right:0"><button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">关闭</button></div>';
+        service_list_html +=   '</div>';
+        service_list_html += '</div>';
+    $('#service_layer_detail').html('').append(service_list_html);
+
+    var $modal = $('#service_layer_detail');
+    var params = new Object();
+    for(var i in serviceData) {
+        if(i == name) {
+            params = serviceData[i];
+            break;
+        } else {
+            continue;
+        }
+    }
+
+    currentService = params;
+    currentService.typeService = params.serviceType;
+    var service_child_list_html = "";
+    var layersInfo = params.layersInfo;
+    var serviceId = params.serviceId.toString().substr(0, 4) + "-" + params.serviceId.toString().substr(4, 2) + "-" + params.serviceId.toString().substr(6, 2);
+    var serviceUrl = '服务地址：' + '<a href="javascript:void(0)" onclick="serviceMap(\'service\')">' + params.serviceUrl + '</a>';
+    for (var i = 0; i < layersInfo.length; i++) {
+        service_child_list_html += '<li><a href="javascript:void(0)" onclick="serviceMap(\''+ layersInfo[i].layerName +'\')">'+ layersInfo[i].layerName +'</a></li>';
+
+        layerData[layersInfo[i].layerName] = layerObjectToChange(layersInfo[i]);
+    }
+
+    $("#layerImg").attr("src", '../../../img/map1765.png');
+    $("#serviceName").text("服务名称：" + params.serviceName);
+    $("#serviceType").text("服务类型：" + params.serviceType);
+    $("#centerPoint").text("服务中心点：" + params.centerPoint);
+    $("#serviceUrl").html(serviceUrl);
+    $("#serviceId").text("发布时间：2018/08/08 8:08:08");
+    //$("#serviceId").text("发布时间：" + serviceId);
+    if(currentService.typeService == 'WMS') {
+        $('<li id="capabilities">getCapabilities：<a href="javascript:void(0)" onclick="capabilities(\'service\')">capabilities</a></li>').insertAfter("#serviceUrl");
+    }
+    $("#mapFilePath").html(service_child_list_html);
+    $modal.modal();
+}
+
+/*服务地图数据缓存、跳转*/
+function serviceMap(name) {
+    console.log(name);
+    sessionStorage.removeItem('mapservice');
+    if(name == 'service') {
+        sessionStorage.setItem('mapservice',JSON.stringify(currentService));
+    } else {
+        var params = new Object();
+        for(var i in layerData) {
+            if(i == name) {
+                params = layerData[i];
+                break;
+            } else {
+                continue;
+            }
+        }
+        var changeLayerDataObj = {
+            serviceName: currentService.serviceName,
+            typeService: currentService.typeService,
+            layerData: params
+        }
+        sessionStorage.setItem('mapservice',JSON.stringify(changeLayerDataObj));
+    }
+    if(currentService.typeService == 'WFS' && name == 'service') return false;
+    window.open(ctx + 'gisService/preview');
+}
+
+/*服务属性添加*/
+function serviceObjectToChange(obj) {
+    // obj.centerPoint.split(',').map(i => Number(i));
+    // obj.serviceIp = window.document.location.hostname;
+    // obj.servicePort = window.document.location.port;
+    return obj;
+}
+
+/*图层属性添加*/
+function layerObjectToChange(obj) {
+    obj.centerPoint = [obj.centerPoint[0], obj.centerPoint[1]];
+    return obj;
+}
+
+
+/****************************************************/
+/*xml服务查看*/
+function capabilities() {
+    localStorage.removeItem('capabilities');
+    localStorage.setItem('capabilities',JSON.stringify(currentService));
+    window.open(ctx + 'gisService/capabilities');
+}
+
+/*启动服务切片*/
+function serviceStart(serviceName) {
+    var service_list_html  = '<div class="modal-dialog modal-lg"><div class="modal-content">';
+        service_list_html +=   '<div class="modal-header"><h3 class="modal-title pull-left" id="movie-detail-modal-title">切片管理 </h3></div>';
+        service_list_html +=   '<div class="modal-body">';
+        service_list_html +=     '<div class="profile">';
+        service_list_html +=       '<ul class="cutting_button">';
+        service_list_html +=         '<li><label for="">服务名称：</label><input type="search" name="" id="cutserviceName" placeholder="服务名称" value="'+ serviceName +'" readonly></li>';
+        service_list_html +=         '<li><label for="">坐标系：</label><select id="cutserviceEpsg"><option value="4326" selected> EPSG:4326 </option><option value="3857"> EPSG:3857 </option></select></li>';
+        service_list_html +=         '<li><label for="">最小级别：</label><div class="zoomBox"><button name="low">&minus;</button><input type="number" id="cutserviceMinzoom" min="0" max="18" value="1" placeholder="最小显示级别" readonly><button name="add">&#43;</button></div></li>';
+        service_list_html +=         '<li><label for="">最大级别：</label><div class="zoomBox"><button name="low">&minus;</button><input type="number" id="cutserviceMaxzoom" min="0" max="18" value="18" placeholder="最大显示级别" readonly><button name="add">&#43;</button></div></li>';
+        service_list_html +=       '</ul>';
+        service_list_html +=     '</div>';
+        service_list_html +=     '<div class="modal-footer" style="padding:10px 0;">';
+        service_list_html +=       '<button type="button" name="cuttingservice" class="btn btn-primary" onclick="cutserviceStart()">开始切片</button>';
+        service_list_html +=       '<button type="button" name="closeservice" class="btn btn-secondary btn-close" data-dismiss="modal">关闭</button>';
+        service_list_html +=     '</div>';
+        service_list_html +=   '</div>';
+        service_list_html += '</div>';
+    $('#service_layer_detail').html('').append(service_list_html);
+    $('.zoomBox button').on('click', function() {
+        var value = Number($(this).siblings('input').val());
+        if($(this).prop('name') == 'low') {
+            if(value <= 0) {
+                value = 0;
+                return false;
+            }
+            value = value - 1;
+        } else {
+            if(value >= 18) {
+                value = 18;
+                return false;
+            }
+            value = value + 1;
+        }
+        $(this).siblings('input').val(value);
+    });
+    var $modal = $('#service_layer_detail');
+    $modal.modal();
+}
+
+/*开始切片*/
+function cutserviceStart() {
+    var params = {};
+    var cutserviceName = $('#cutserviceName').val();
+    var cutserviceEpsg = $('#cutserviceEpsg').val();
+    var cutserviceMinzoom = $('#cutserviceMinzoom').val();
+    var cutserviceMaxzoom = $('#cutserviceMaxzoom').val();
+    params.serviceName = cutserviceName;
+    params.srid = cutserviceEpsg;
+    params.minZ = cutserviceMinzoom;
+    params.maxZ = cutserviceMaxzoom;
+    $.get(ctx + "WMTSServices/startCutting", params, function (r) {
+        console.log('开始切片：',r);
+        setTimeout(function() {
+            $('#service_layer_detail').modal('hide');
+        }, 300);
+    })
+}
+
+/*服务删除*/
+function serviceDelete(name, type) {
+    var params = {};
+    var delserviceName = name;
+    var delserviceType = type;
+    params.serviceName = delserviceName;
+    params.serviceType = delserviceType;
+    var r = confirm('删除是不可恢复的，你确认要删除吗？');
+	if (r == false) return false;
+    $.get(ctx + "gisService/delete", params, function (r) {
+        console.log('服务删除：',r);
+        getGisService(!currPage ? 1 : currPage, size);
+    });
+}

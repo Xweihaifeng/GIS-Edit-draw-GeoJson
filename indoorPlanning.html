@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title> 室内绘制 </title>
+
+        <link rel="stylesheet" type="text/css" href="css/spectrum.css" />
+        <link rel="stylesheet" type="text/css" href="css/indoorPlanning.css">
+
+        <script src="js/base/vue.min.js"></script>
+        <script type="application/javascript" src="js/base/iGis-debug.js"></script>
+        <script src="js/base/jquery-3.2.1.min.js"></script>
+        <script src="js/base/FileSaver.min.js"></script>
+        <script src="js/base/spectrum.js"></script>
+    </head>
+
+    <body>
+        <article id="containerBox">
+            <div class="popup-layer"></div>
+            <nav class="navigationBox">
+                <li class="navigationMenu">
+                    <img :src="imgList.feat_add" title="添加新图层">
+                    <img :src="imgList.feat_import" title="导入图层">
+                    <img :src="imgList.feat_save" title="导出图层">
+                    <img :src="imgList.feat_batch" title="批量导入图层">
+                    <span>|</span>
+                    <img src="img/igis_icon.png" class="dot" id="addpoint" name="Point" title="添加点/图标">
+                    <img src="img/igis_line.png" class="lines" id="addline" name="LineString" title="添加线">
+                    <img src="img/igis_circle.png" class="plane" id="addCircle" name="Three" title="添加圆形">
+                    <img src="img/igis_three.png" class="plane" id="addThree" name="Three" title="添加三角形">
+                    <img src="img/igis_square.png" class="plane" id="addpolygon" name="Square" title="添加矩形">
+                    <img src="img/igis_five.png" class="plane" id="addFive" name="Five" title="添加五边形">
+                    <img src="img/igis_six.png" class="plane" id="addSix" name="Six" title="添加六边形">
+                    <img src="img/igis_six.png" class="plane" id="addSeven" name="Seven" title="添加七边形">
+                    <img src="img/igis_polygon.png" class="plane" id="addsquare" name="Polygon" title="添加多边形">
+                </li>
+                <li class="operatingMenu">
+                    <div>伸缩: <input class="switch-btn switch-btn-animbg" type="checkbox" checked id="telescopic"></div>
+                    <div>修改: <input class="switch-btn switch-btn-animbg" type="checkbox" checked id="modify"></div>
+                    <div>停靠: <input class="switch-btn switch-btn-animbg" type="checkbox" checked id="berth"></div>
+                </li>
+                <li class="navigationSearch">
+                    <div class="elementBox">
+                        <select id="changeMap">
+                            <option value="part" selected>局部</option>
+                            <option value="all">全部</option>
+                        </select>
+                        <img :src="imgList.popup" class="changeMenu" title="地图切换">
+                        <img :src="imgList.menu_nav" class="moreMenu" title="更多信息">
+                    </div>
+                    <div class="lnglatBox">
+                        <input type="search" v-model="lnglat.lng" placeholder="经度……" />
+                        <input type="search" v-model="lnglat.lat" placeholder="纬度……" />
+                    </div>
+                    <div class="subepsgBox">
+                        <img :src="imgList.menu_search" alt="" title="定位导航">
+                    </div>
+                </li>
+            </nav>
+            <section class="contentBox">
+                <section id="iGisBox"></section>
+                <aside class="featureBox">
+                    <div class="igis_button">
+                        <div class="igis_btn_list">
+                            <div class="igis_btn">
+                                <span id="select_type_box1">
+                                    <input type="radio" name="layerSel" id="part" value="part" checked="checked" />
+                                    <label for="part">局部</label>
+                                </span>
+                                <span id="select_type_box2">
+                                    <input type="radio" name="layerSel" id="all" value="all" />
+                                    <label for="all">全部</label>
+                                </span>
+                                <button type="button" id="changeMap">地图切换</button>
+                            </div>
+                            <div class="igis_btn" class="telescopic">
+                                <li class="navigateInfo">伸缩:</li>
+                                <span class="switch-off" id="telescopic"></span>
+                            </div>
+                            <div class="igis_btn modify">
+                                <li class="navigateInfo">修改:</li>
+                                <span class="switch-off" id="modify"></span>
+                            </div>
+                            <div class="igis_btn modify">
+                                <li class="navigateInfo">停靠:</li>
+                                <span class="switch-off" id="berth"></span>
+                            </div>
+                            <div class="igis_btn" id="addFea">
+                                <li class="navigateInfo">添加:</li>
+                                <img src="img/igis_icon.png" class="dot" id="addpoint" name="Point" title="添加点/图标">
+                                <img src="img/igis_line.png" class="lines" id="addline" name="LineString" title="添加线">
+                                <img src="img/igis_circle.png" class="plane" id="addCircle" name="Three" title="添加圆形">
+                                <img src="img/igis_three.png" class="plane" id="addThree" name="Three" title="添加三角形">
+                                <img src="img/igis_square.png" class="plane" id="addpolygon" name="Square" title="添加矩形">
+                                <img src="img/igis_five.png" class="plane" id="addFive" name="Five" title="添加五边形">
+                                <img src="img/igis_six.png" class="plane" id="addSix" name="Six" title="添加六边形">
+                                <img src="img/igis_six.png" class="plane" id="addSeven" name="Seven" title="添加七边形">
+                                <img src="img/igis_polygon.png" class="plane" id="addsquare" name="Polygon" title="添加多边形">
+                            </div>
+                        </div>
+                        <ul class="lonAndLat">
+                            <li><label class="navigateInfo">经度:</label><input id="editLongitude" type="text" /></li>
+                            <li><label class="navigateInfo">纬度:</label><input id="editLatitude" type="text" /></li>
+                            <li><button id="editSubmit">确定</button></li>
+                        </ul>
+                        <div id="fun9">
+                            <p>
+                                <button id="addNewLayer"><img src="img/igis_fea_add.png" title="添加图层"></button>
+                                <label class="ui-upload"><img src="img/igis_fea_import.png" title="导入图层"><input type="file"
+                                        id="openNewLayer" style="display: none;" /></label>
+                                <button id="saveFea"><img src="img/igis_fea_save.png" title="导出图层"></button>
+                                <button id="batchAddFeature"><img src="img/igis_fea_batch.png" title="批量添加">批量添加</button>
+                            </p>
+                            <nav id="getGeojson">
+                                <div>
+                                    <span class="layer-option">选项</span>
+                                    <span class="layer-current">当前</span>
+                                    <span class="layer-name">图层名称</span>
+                                    <span class="layer-del">删除图层</span>
+                                </div>
+                            </nav>
+                        </div>
+                        <sup class="igis_takeup">
+                            <img src="img/igis_take_up.png">
+                        </sup>
+                    </div>
+                    <div id="marker" class="markerPop">
+                        <div class="markerPop-top">
+                            <div class="top-title">
+                                <span>标记详情</span>
+                            </div>
+                            <div class="pop-close" id="pop-close">&times;</div>
+                        </div>
+                        <div class="markerPop-center">
+                            <ul class="userEdit" id="longitude"></ul>
+                            <button type="button" id="fun4">取消</button>
+                            <button type="button" id="fun8">批量添加</button>
+                            <button type="button" id="fun5">保存</button>
+                            <button type="button" id="fun6">新增</button>
+                            <button type="button" id="fun7">删除</button>
+                        </div>
+                    </div>
+                    <div id="glassLayer">
+                        <div><label>名称：</label><input type="text" id="layerName" /></div>
+                        <div><label>类型：</label>
+                            <select name="" id="layerType">
+                                <option value="point">point</option>
+                                <option value="line">line</option>
+                                <option value="polygon" selected>polygon</option>
+                            </select>
+                        </div>
+                        <div><button id="saveLayerType"> 保存 </button><button id="closeLayerType"> 取消 </button></div>
+                    </div>
+                    <div id="changeService">
+                        <div><label>serviceUrl：</label><input type="text" id="serviceUrl" placeholder="格式：/WMSServices..." /></div>
+                        <div><label>mapCenter：</label><input type="text" id="mapCenter" placeholder="格式：[lon,lat]" /></div>
+                        <div><button id="saveService"> 保存 </button><button id="closeService"> 取消 </button></div>
+                    </div>
+                    <div id="popupBox">
+                        <!-- <div> 请先选择图层、当前图层后操作! </div> -->
+                    </div>
+                    <div id="markerImg">
+                        <div class="markerImg-top">
+                            <div class="markerImg-title">
+                                <span>图标列表</span>
+                            </div>
+                            <div class="markerImg-close" id="markerImg-close">&times;</div>
+                        </div>
+                        <div class="markerImg-center"></div>
+                    </div>
+                    <div id="markerFeature"></div>
+                </aside>
+            </section>
+        </article>
+    </body>
+    <script>
+        var app = new Vue({
+            el: '#containerBox',
+            data: {
+                imgList: {
+                    menu_nav: 'img/quantum_menu.png',
+                    menu_search: 'img/navigation/right.png',
+                    feat_add: 'img/igis_fea_add.png',
+                    feat_batch: 'img/igis_fea_batch.png',
+                    feat_import: 'img/igis_fea_import.png',
+                    feat_save: 'img/igis_fea_save.png',
+                    popup: 'img/igis_popup.png'
+                },
+                lnglat: {
+                    lng: '',
+                    lat: ''
+                },
+                title: '',
+                setCenter: [108.763156, 34.258986]
+            },
+            created() {},
+            mounted() {
+                var self = this;
+                self.defaultMap();
+            },
+            methods: {
+                defaultMap: function() {
+                    var self = this;
+                    var mymap = new iGis.GisMap();
+                    mymap.createMap({
+                        mapType: iGis.MapType.OPENSTREET_MAP,
+                        divId: "iGisBox",
+                        center: self.setCenter,
+                        zoom: 15,
+                        maxZoom: 22,
+                        projection: "EPSG:3857",
+                        isScaleLine: true,
+                        isMousePosition: true,
+                        isZoomLevel: true,
+                        units: "metric",
+                        wrapX: false
+                    });
+                },
+                check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+            },
+            filters: {
+                fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+            }
+        })
+    </script>
+
+</html>

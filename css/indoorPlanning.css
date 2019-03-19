@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+/* 公用样式 */
+* { margin: 0; padding: 0; font-size: 11px; }
+html, body, #containerBox { position: fixed; top: 0; right: 0; bottom: 0; left: 0; padding: 0; margin: 0; overflow: hidden; }
+#iGisBox { width: 100%; height: 100%; }
+ul, li { list-style: none; }
+span { display: inline-block; }
+img { border: none; vertical-align: middle; }
+input { margin: 0; vertical-align: text-bottom; outline: none; }
+button { outline: none; }
+
+/* input开关 */
+.switch-btn { cursor: pointer; width: 55px; height: 22px; position: relative; border: 1px solid #cccccc; background-color: #fdfdfd; box-shadow: #cccccc 0 0 0 0 inset; border-radius: 15px; background-clip: content-box; display: inline-block; -webkit-appearance: none; user-select: none; outline: none; }
+.switch-btn:before { content: ''; width: 20px; height: 20px; position: absolute; top: 0; left: 0; border-radius: 20px; background-color: #fff; box-shadow: 1px 0 1px rgba(0, 0, 0, 0.7); }
+.switch-btn:checked { border-color: #0095aa; box-shadow: #0095aa 0 0 0 16px inset; background-color: #0095aa; }
+.switch-btn:checked:before { left: 33px; }
+.switch-btn.switch-btn-animbg { transition: background-color ease .4s; }
+.switch-btn.switch-btn-animbg:before { transition: left .3s; }
+.switch-btn.switch-btn-animbg:checked { box-shadow: #cccccc 0 0 0 0 inset; background-color: #0095aa; transition: border-color .4s, background-color ease .4s; }
+.switch-btn.switch-btn-animbg:checked:before { transition: left .3s; }
+
+/* 蒙层 */
+.popup-layer { display: none; position: absolute; left: 0; top: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, .5); z-index: 1010; }
+
+/* 顶部菜单 */
+.navigationBox { position: absolute; top: 15px; left: 15px; z-index: 99; }
+.navigationBox .navigationMenu { display: flex; justify-content: space-between; align-items: center; width: 400px; height: 45px; margin-bottom: 2px; padding: 0px 15px; background: linear-gradient(#003e73, #00cccc); border-radius: 5px; box-shadow: 1px 1px 5px #ccc; }
+.navigationBox .navigationMenu > img { height: 24px; }
+.navigationBox .navigationMenu > span { color: #fff; }
+.navigationBox .operatingMenu { display: flex; justify-content: space-between; align-items: center; width: 400px; height: 45px; margin-bottom: 2px; padding: 0px 15px; background: #fff; border-radius: 5px; box-shadow: inset 0px 3px 6px #00bec3, inset 0px 0px 8px #007f9c; }
+.navigationBox .operatingMenu > div { display: flex; align-items: center; }
+.navigationBox .operatingMenu > div > input { margin-left: 5px; }
+.navigationBox .navigationSearch { display: flex; width: 400px; height: 60px; padding: 15px; background: #fff; border-radius: 5px; box-shadow: inset 0px 6px 6px #00bec3, inset 0px 0px 4px #007f9c; }
+.navigationBox .navigationSearch .elementBox { width: 100px; display: flex; flex-wrap: wrap; border-right: 1px solid #ccc; cursor: pointer; }
+.navigationBox .navigationSearch .elementBox #changeMap { width: 60px; height: 25px; line-height: 25px; background: #fff; color: #00658c; font-size: 12px; border-radius: 4px; border: 1px solid #00a8b5; }
+.navigationBox .navigationSearch .elementBox .changeMenu { height: 28px; }
+.navigationBox .navigationSearch .elementBox .moreMenu { height: 24px; padding: 2px 2px 2px 5px; }
+.navigationBox .navigationSearch .lnglatBox { width: 380px; margin: 0 0 0 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.navigationBox .navigationSearch .lnglatBox > input { height: 50%; width: 100%; border: none; }
+.navigationBox .navigationSearch .lnglatBox > input:first-child { border-bottom: 1px solid #ccc; }
+.navigationBox .subepsgBox { width: 55px; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+.navigationBox .subepsgBox > img { width: 20px; }
+
+/* 内容部分 */
+.contentBox { width: 100%; height: 100vh; display: flex; }
+
+/* IGIS管理栏 */
+#iGisBox { width: calc(100% - 251px); height: 100%; }
+
+/* 图层管理栏 */
+.featureBox { width: 250px; height: 100%; border-left: 1px solid #ccc; }

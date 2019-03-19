@@ -1,0 +1,689 @@
+/**************************************************************************** 编辑公用变量 **************************************************************************/
+var currService = {};
+var serverInfo = {};
+var symbol =     {};
+var fieldType =  [];
+var aggr =       [{ type: 'and' }, { type: 'or' }];
+var operator =   [{ value: '>' }, { value: '<' }, { value: '=' }, { value: '>=' }, { value: '<=' }, { value: '!=' }, { value: 'like' }, { value: 'in' }, { value: 'not in' }];
+var position =   [{ pos: 'auto' }, { pos: 'top' }, { pos: 'right' }, { pos: 'bottom' }, { pos: 'left' }, { pos: 'center' }, { pos: 'left-top' }, { pos: 'right-top' }, { pos: 'left-bottom' }, { pos: 'right-bottom' }];
+var conditions =  { field: "", fieldType: "", logical: "", values: '', subConditions: null };
+var stylesInfo = [{ angle: 0, color: { red: 255, green: 255, blue: 255, alpha: 0 }, gap: 0.0, geomTransform: null, initgap: 0.0, linecap: null, linejoin: null, maxLevel: 0, minLevel: 0, outlineColor: { red: 255, green: 255, blue: 255, alpha: 0 }, outlineWidth: 0, pattern: null, size: 0, symbolName: '', width: 1}];
+var labelsInfo = [{ buffer: 0, color: { red: 255, green: 255, blue: 255, alpha: 0 }, font: '', force: false, maxLength: 6, maxLevel: 0, minDistance: 0, minFeatureSize: 0, minLevel: 0, offset: [0,1], outlineColor: { red: 255, green: 255, blue: 255, alpha: 0 }, partials: false, position: "right", shadowSize: [0,1], size: 10, style: { angle: 0, color: { red: 255, green: 255, blue: 255, alpha: 0 }, gap: null, geomTransform: null, initgap: 0, linecap: null, linejoin: null, maxLevel: 1, minLevel: 0, outlineColor: { red: 255, green: 255, blue: 255, alpha: 0 }, outlineWidth: 0, pattern: null, size: 0, symbolName: null, width: 0 }}];
+
+var serverInfoX = { serviceId: null, serviceName: "gisserver_wms_grid_test", serviceType: "WMS", dataFormat: "gridData", mapFilePath: "", serviceUrl: "/WMSServices/loadService?serviceName=gisserver_wms_grid_test", backGroundColor: { red: 255, green: 255, blue: 255, alpha: 0 }, centerPoint: "100.4797754,13.7397818", available: true };
+var layersInfo = [{ layerId: 0, layerName: "layer_gisserver_wms_grid_test.shp", status: 1, layerProj: "", centerPoint: [100.479, 13.739], geoType: 3, data: "", shapePath: "", labelItem: null, minLevel: 0, maxLevel: 0, status: false}];
+var classesInfo = [{ minLevel: 0, maxLevel: 0}];
+/**************************************************************************** 函数处理操作 **************************************************************************/
+function isEmpty(v) {
+    return (Object.prototype.isPrototypeOf(v) && Object.keys(v).length == 0)
+}
+
+/* 显示提示信息 */
+function openMsg(name, type) {
+    $('#currServiceBox').find('.openMsg').remove();
+    $('#currServiceBox').append('<h3 class="openMsg">' + name + '</h3>');
+    $('#currServiceBox .openMsg').fadeIn('slow').delay(1500).fadeOut('slow');
+}
+
+/* 获取颜色值\色值转换 */
+function get_color(obj) {
+    if (!obj) {
+        return 'rgba(255,255,255,0)';
+    } else {
+        obj = 'rgba(' + obj.red + ',' + obj.green + ',' + obj.blue + ',' + obj.alpha + ')';
+        return obj;
+    }
+}
+
+/* 设置颜色值\色值转换 */
+function set_color(colorVal) {
+    if (!colorVal) {
+        return {
+            red: 255,
+            green: 255,
+            blue: 255,
+            alpha: 0
+        };
+
+    } else if (typeof colorVal == 'object') {
+        return colorVal
+
+    } else {
+        var rep = /([^\(]+[\d$])/;
+        var r = colorVal.match(rep);
+        var backGroundColor = r[1].split(',').map(Number);
+
+        colorVal = {
+            red: backGroundColor[0],
+            green: backGroundColor[1],
+            blue: backGroundColor[2],
+            alpha: backGroundColor[3]
+        }
+
+        return colorVal;
+    }
+}
+
+/* 过滤条件级联 */
+function cascade(body, item, item3) {
+    for (var value in body) {
+        if (value == item) {
+            item3.fieldType = body[item];
+        }
+    }
+}
+// 添加过滤判断条件
+function addRow(body, k3) {
+    console.log(body, k3)
+    if (!body.subConditions) {
+        body.subConditions = [{
+            field: body.field,
+            fieldType: body.fieldType,
+            logical: body.logical,
+            values: body.values ? body.values = body.values.split(',') : [],
+            subConditions: null
+        }]
+
+        var resp = body.subConditions[k3];
+        if (!resp.field || !resp.fieldType || !resp.logical || isEmpty(resp.values)) {
+            openMsg('填写完整信息后添加', 'error');
+            return false;
+        } else {
+            var tempObj = {
+                field: null,
+                fieldType: null,
+                logical: null,
+                values: [],
+                subConditions: null
+            }
+
+            body.subConditions.push(tempObj);
+            body.logical = 'and';
+        }
+    } else {
+        var tempObj = {
+            field: null,
+            fieldType: null,
+            logical: null,
+            values: [],
+            subConditions: null
+        }
+
+        var resp = body.subConditions[k3];
+
+        if (!resp.field || !resp.fieldType || !resp.logical || isEmpty(resp.values)) {
+            openMsg('填写完整信息后添加', 'error');
+            return false;
+        } else {
+            body.subConditions.push(tempObj);
+            if (!body.logical.includes('and') && !body.logical.includes('or')) {
+                body.logical = 'and';
+            }
+        }
+    }
+}
+
+// 删除该条过滤判断条件
+function delRow(body, k3) {
+    if (!body.subConditions || body.subConditions.length <= 1) {
+        body.field = '';
+        body.fieldType = '';
+        body.logical = '';
+        body.subConditions = null;
+        body.values = null;
+        openMsg('不支持删除', 'error');
+
+        return false
+    } else {
+        body.subConditions.splice(body.subConditions.findIndex((item, i) => i === k3), 1);
+    }
+}
+
+function recursion(layersInfo, num, title) {
+    var temp = 0;
+    let rep = /([_][^_]+)$/;
+    let reg = /([^_]+)$/;
+
+    layersInfo.map((v, i) => {
+        let name = v.layerName;
+        let prev = name.replace(rep, '');
+        let last = name.match(reg)[1];
+
+        if (prev == title && temp < Number(last)) {
+            temp = Number(last);
+        }
+    });
+
+    return temp + 1;
+}
+
+// 添加图层信息
+function addFeature(layerObj, k) {
+    if (layerObj.length > 0) {
+        let rep = /([_][^_]+)$/;
+        let reg = /([^_]+)$/;
+        let obj = JSON.parse(JSON.stringify(layerObj[k]));
+        let typeName = obj.layerName.replace(rep, '');
+        let typeNum = obj.layerName.match(reg)[1];
+
+        if (!Number.isNaN(Number(typeNum))) {
+            let arr = obj.layerName.split('_');
+            let len = arr.length;
+
+            arr.splice(len - 1, len - 1, recursion(layerObj, Number(typeNum) + 1, typeName));
+            obj.layerName = arr.join('_');
+
+        } else {
+            let num = 0;
+            let title = obj.layerName;
+
+            obj.layerName = obj.layerName + '_' + recursion(layerObj, Number(num) + 1, title);
+        }
+
+        layerObj.splice(k + 1, 0, obj);
+        $('.detailsx1').remove();
+        currServiceRenderList();
+    }
+}
+
+// 删除图层信息
+function delFeature(layerObj, k) {
+    if (layerObj.length <= 1) {
+        openMsg('不支持删除', 'error');
+        return false
+    }
+    layerObj.splice(layerObj.findIndex((V, i) => i === k), 1);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 添加样式表信息
+function addClassInfo(classObj, k) {
+    var obj = JSON.parse(JSON.stringify(classObj[k]));
+    classObj.splice(k + 1, 0, obj);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 删除样式表信息
+function delClassInfo(classObj, k) {
+    if (classObj.length <= 1) {
+        openMsg('不支持删除', 'error');
+        return false
+    }
+    classObj.splice(classObj.findIndex((V, i) => i === k), 1);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 添加样式信息
+function addStyleInfo(styleObj, k) {
+    var obj = JSON.parse(JSON.stringify(styleObj[k]));
+    styleObj.splice(k + 1, 0, obj);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 删除样式信息
+function delStyleInfo(styleObj, k) {
+    if (styleObj.length <= 1) {
+        openMsg('不支持删除', 'error');
+        return false
+    }
+    styleObj.splice(styleObj.findIndex((V, i) => i === k), 1);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 添加标注信息
+function addLabelInfo(labelObj, k) {
+    var obj = JSON.parse(JSON.stringify(labelObj[k]));
+    labelObj.splice(k + 1, 0, obj);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 删除标注信息
+function delLabelInfo(labelObj, k) {
+    if (labelObj.length <= 1) {
+        openMsg('不支持删除', 'error');
+        return false
+    }
+    labelObj.splice(labelObj.findIndex((V, i) => i === k), 1);
+    $('.detailsx1').remove();
+    currServiceRenderList();
+}
+
+// 过滤条件字段信息显示
+function field(val) {
+    val = val.replace(/\\/g, '/');
+    $.ajax({
+        url: ctx + 'gisService/getMapDataField?filePath=' + val,
+        async: false,
+        success: function(res) {
+            fieldType.push(JSON.parse(res).data)
+        }
+    })
+}
+
+// 获取图标名称
+function symbolName() {
+    $.get(ctx + 'gisService/getSymbolsName', function(res) {
+        var result = JSON.parse(res).data;
+        if (result) {
+            for (var X_D in result) {
+                if (!result[X_D]) {
+                    result[X_D] = X_D;
+                }
+            }
+        }
+        symbol = result;
+    })
+}
+
+
+
+/**************************************************************************** DOM节点操作 **************************************************************************/
+// 服务信息列表
+function serviceInfoBox(res, k1) {
+    currService.serverColorBg = get_color(currService.backGroundColor);
+    var template = `<details class="serviceInfo" open><!-- 服务信息 -->
+        <summary> 服务信息 </summary>
+        <div class="sub-list">
+            <aside class="sub-list-li"><mark> 服务名称: </mark><input type="search" selval="serviceName" value="${currService.serviceName}" readonly></aside>
+            <aside class="sub-list-li"><mark> 活动类型: </mark><input type="search" selval="serviceType" value="${currService.serviceType}" readonly></aside>
+            <aside class="sub-list-li"><mark> 中心点: </mark><input type="search" selval="centerPoint" value="${currService.centerPoint}"></aside>
+            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="serverColorBg" value="${currService.serverColorBg}" class="showAlpha"></aside>
+            <aside class="sub-list-li"><mark> 服务地址: </mark><input type="search" selval="serviceUrl" value="${currService.serviceUrl}" readonly></aside>
+        </div>
+    </details>`
+    $('#currServiceBoxContent').append(template);
+}
+
+// 服务信息列表
+function layersInfoListBox(res, k1) {
+    var classesInfo_template = '';
+    if (res.classesInfo.length > 0) {
+        res.classesInfo.map((e2, k2) => {
+            var labelsInfo_template = '';
+            var stylesInfo_template = '';
+            if (e2.labelsInfo.length > 0) {
+                var position_template = position.map(item => `<option key="${item.pos}" value="${item.pos}"> ${item.pos} </option>`);
+                e2.labelsInfo.map(function(e3, k3) {
+                    labelsInfo_template += `<details class="detailsx1 labelsInfo" open selkey="${k3}">
+                        <summary> 标注信息： <button class="addLabelInfo">+</button><button class="delLabelInfo">-</button></summary>
+                        <div class="sub-list">
+                            <aside class="sub-list-li"><mark> 字号: </mark><input type="number" selval="size" min="1" max="36" value="${e3.size}"/></aside>
+                            <aside class="sub-list-li"><mark> 位置: </mark><select selval="position"><option value="${e3.position}" selected> ${e3.position} </option>${position_template}</select></aside>
+                            <aside class="sub-list-li"><mark> 颜色: </mark><input type="search" selval="labelColorFont" value="${e3.labelColorFont}" class="showAlpha"></aside>
+                            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="style.labelColor" value="${e3.style.labelColor}" class="showAlpha"></aside>
+                            <aside class="sub-list-li"><mark> 边框色: </mark><input type="search" selval="style.labelColorLine" value="${e3.style.labelColorLine}" class="showAlpha"></aside>
+                            <aside class="sub-list-li"><mark> 最大长度: </mark><input type="number" selval="maxLength" min="1" max="1000" value="${e3.maxLength}"/></aside>
+                            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="${e3.minLevel}"></aside>
+                            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="${e3.maxLevel}"></aside>
+                        </div>
+                    </details>`;
+                })
+            }
+            if (e2.stylesInfo.length > 0) {
+                var symbol_template = '';
+                var symbol_imgbox_template = '';
+                for (var i in symbol) {
+                    symbol_template += `<option value="${symbol[i]}"> ${i} </option>`;
+                    symbol_imgbox_template += `<img src="../../../img/favicon.ico" name="${symbol[i]}" title="${i}">`;
+                }
+                e2.stylesInfo.map(function(e3, k3) {
+                    stylesInfo_template += `<details class="detailsx1 stylesInfo" open selkey="${k3}">
+                        <summary> 样式： <button class="addStyleInfo">+</button><button class="delStyleInfo">-</button></summary>
+                        <div class="sub-list">
+                            <aside class="sub-list-li"><mark> 图标名称: </mark><select selval="symbolName"><option value="${e3.symbolName | ' '}" selected> ${e3.symbolName | ' '} </option>${symbol_template}</select></aside>
+                            <aside class="sub-list-li"><mark> 图标名称: </mark><input type="search" selval="symbolName" value="${e3.symbolName | ''}" readonly></aside>
+                            <div class="symbolName-imgbox"><div class="symbolName-title"><span>图标列表</span><span class="symbolName-close">&times;</span></div><div class="symbolName-cont">${symbol_imgbox_template}</div></div>
+                            <aside class="sub-list-li"><mark> 大小: </mark><input type="number" selval="size" min="0" max="20" value="${e3.size}"></aside>
+                            <aside class="sub-list-li"><mark> 宽度: </mark><input type="number" selval="width" min="0" max="20" value="${e3.width}"></aside>
+                            <aside class="sub-list-li"><mark> 颜色: </mark><input type="search" selval="styleColor" value="${e3.styleColor}" class="showAlpha"></aside>
+                            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="styleColorLine" value="${e3.styleColorLine}" class="showAlpha"></aside>
+                            <aside class="sub-list-li"><mark> 边线宽度: </mark><input type="number" selval="outlineWidth" min="0" max="20" value="${e3.outlineWidth}"></aside>
+                            <aside class="sub-list-li"><mark> 转角样式: </mark><input type="text" selval="linejoin" value="${e3.linejoin | ''}"></aside>
+                            <aside class="sub-list-li"><mark> 间隔显示: </mark><input type="text" selval="pattern" value="${e3.pattern | ''}"></aside>
+                            <aside class="sub-list-li"><mark> 间隔距离: </mark><input type="text" selval="gap" value="${e3.gap}"></aside>
+                            <aside class="sub-list-li"><mark> 初始位置: </mark><input type="text" selval="initgap" value="${e3.initgap}"></aside>
+                            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="${e3.minLevel}"></aside>
+                            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="${e3.maxLevel}"></aside>
+                        </div>
+                    </details>`;
+                })
+            }
+
+            var aggr_template = aggr.map(item => `<option key="${item.type}" value="${item.type}"> ${item.type} </option>`);
+            var operator_template = operator.map(item => `<option key="${item.value}" value="${item.value}"> ${item.value} </option>`);
+            var conditions_subC_template = '';
+            var fieldtype_template = '';
+            for (var i in fieldType[k1]) {
+                fieldtype_template += `<option value="${i}"> ${i} </option>`
+            }
+
+            if (e2.conditions && !e2.conditions.subConditions) {
+                conditions_subC_template += `<hgroup>
+                    <select value="${e2.conditions.field}" change="cascade(fieldType[k1],e2.conditions.field,e2.conditions)"><option value=""></option>${fieldtype_template}</select>
+                    <input type="text" value="${e2.conditions.fieldType}" readonly>
+                    <select value="${e2.conditions.logical}">${operator_template}</select>
+                    <input type="text" value="${e2.conditions.values}">
+                    <button class="addRow">+</button><button class="delRow">-</button>
+                </hgroup>`
+            } else if (e2.conditions) {
+                e2.conditions.subConditions.map(item => {
+                    conditions_subC_template += `<hgroup>
+                        <select value="${item.field}" change="cascade(fieldType[k1],item.field,item)"><option value=""></option>${fieldtype_template}</select>
+                        <input type="text" value="${item.fieldType}" readonly>
+                        <select value="item.logical">${operator_template}</select>
+                        <input type="text" value="${item.values}">
+                        <button class="addRow">+</button><button class="delRow">-</button>
+                    </hgroup>`
+                })
+            }
+            classesInfo_template += `<details class="detailsx1 classesInfo" open selkey="${k2}">
+                <summary> 样式表： <button class="addClassInfo">+</button><button class="delClassInfo">-</button></summary>
+                <div class="sub-list">
+                    <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="${e2.minLevel}"></aside>
+                    <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="${e2.maxLevel}"></aside>
+                </div>
+                <details class="detailsx1 conditions" open selkey="${k2}">
+                    <summary> 过滤条件 </summary>
+                    <div class="sub-list">
+                        <aside class="sub-list-li">
+                            <div>
+                                <hgroup>
+                                    <span style="width:100px">字段名</span><span style="width:138px">类型</span><span style="width:65px">运算关系</span><span style="width:138px">字段值</span>
+                                </hgroup>
+                                ${conditions_subC_template}
+                                <hgroup v-if="e2.conditions.subConditions && e2.conditions.subConditions.length > 1">
+                                    <mark> 逻辑关系: </mark>
+                                    <select value="${e2.conditions.logical}"><option value=""></option>${aggr_template}</select>
+                                </hgroup>
+                            </div>
+                        </aside>
+                    </div>
+                </details>
+                ${stylesInfo_template}
+                ${labelsInfo_template}
+            </details>`;
+        });
+    }
+
+    var labelItem_template = '';
+    for (var i in fieldType[k1]) {
+        labelItem_template += `<option value="${i}"> ${i} </option>`
+    }
+    var layersInfo_template = `<details class="detailsx1 layersInfo" open selkey="${k1}"><!-- 服务信息 -->
+        <summary> ${res.layerName} <button class="addFeature">+</button><button class="delFeature">-</button></summary>
+        <div class="sub-list">
+            <aside class="sub-list-li"><mark> 图层编号: </mark><input type="number" selval="layerId" min="0" value="${res.layerId}"></aside>
+            <aside class="sub-list-li"><mark> 图层名称: </mark><input type="search" selval="layerName" value="${res.layerName}"></aside>
+            <aside class="sub-list-li"><mark> 数据类型: </mark><input type="search" selval="geoType1" value="${res.geoType1}" readonly></aside>
+            <aside class="sub-list-li"><mark> 图层状态: </mark><input type="checkbox" selval="status" class="switch-btn switch-btn-animbg" checked="${res.status}"></aside>
+            <aside class="sub-list-li"><mark> 标注名称: </mark><select selval="labelItem"><option value="${res.labelItem | ''}" selected>${res.labelItem | ''}</option>${labelItem_template}</select></aside>
+            <aside class="sub-list-li"><mark> 图层坐标系: </mark><input type="search" selval="layerProj" value="${res.layerProj}" readonly></aside>
+            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="${res.minLevel}"></aside>
+            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="${res.maxLevel}"></aside>
+        </div>
+        ${classesInfo_template}
+    </details>`;
+    $('#currServiceBoxContent').append(layersInfo_template);
+}
+
+/* 服务编辑更新 */
+function currServiceRenderList() {
+    fieldType = [];
+    symbolName();
+    currService.layersInfo.map(function(e1, k1) {
+        let resList = '';
+        e1.status == 1 ? e1.status = true : e1.status = false;
+        e1.geoType == 1 ? e1.geoType1 = '点' : e1.geoType == 2 ? e1.geoType1 = '线' : e1.geoType == 3 ? e1.geoType1 = '面' : e1.geoType == 4 ? e1.geoType1 = '点' : e1.geoType == 5 ? e1.geoType1 = '线' : e1.geoType == 6 ? e1.geoType1 = '面' : e1.geoType == -1 ? e1.geoType1 = '栅格' : e1.geoType1 = '未知';
+        currService.dataFormat != "gridData" ? resList = e1.data : resList = e1.shapePath;
+
+
+        field(resList);
+        e1.classesInfo.map((e2, k2) => {
+            if (e2.stylesInfo) {
+                e2.stylesInfo.map((e3, k3) => {
+                    e3.styleColor = get_color(e3.color);
+                    e3.styleColorLine = get_color(e3.outlineColor);
+
+                    let isArray = Object.prototype.toString.call(e3.pattern) === '[object Array]';
+                    e3.pattern ? (!isArray ? e3.pattern : e3.pattern = e3.pattern.join(',')) : e3.pattern;
+                });
+            } else {
+                e2.stylesInfo = stylesInfo;
+            }
+
+            if (e2.labelsInfo) {
+                e2.labelsInfo.map((e3, k3) => {
+                    e3.labelColorFont = get_color(e3.color);;
+                    e3.style.labelColor = get_color(e3.style.color);;
+                    e3.style.labelColorLine = get_color(e3.style.outlineColor);;
+                })
+            } else {
+                e2.labelsInfo = labelsInfo;
+            }
+
+            if (e2.conditions) {
+                let isArray = Object.prototype.toString.call(e2.conditions.values) === '[object Array]';
+                e2.conditions.values ? (!isArray ? e2.conditions.values : e2.conditions.values = e2.conditions.values.join(',')) : e2.conditions.values;
+
+                if (e2.conditions.subConditions) {
+                    e2.conditions.subConditions.map((e3, k3) => {
+                        let isArray1 = Object.prototype.toString.call(e3.values) === '[object Array]';
+                        e3.values ? (!isArray ? e3.values : e3.values = e3.values.join(',')) : e3.values;
+                    })
+                }
+            } else {
+                e2.conditions = conditions;
+            }
+        });
+
+        layersInfoListBox(e1, k1);
+    });
+}
+
+/* 修改并更新本服务的整个信息 */
+function updateForm() {
+    var serverInfoData = currService;
+    serverInfoData.backGroundColor = set_color(serverInfoData.serverColorBg);
+    delete serverInfoData.serverColorBg;
+    serverInfoData.layersInfo.map((v1, i1) => {
+        v1.status ? v1.status = 1 : v1.status = 0;
+        delete v1.geoType1;
+        v1.classesInfo.map((v2, i2) => {
+            if (v2.stylesInfo) {
+                v2.stylesInfo.map((v3, i3) => {
+                    v3.color = set_color(v3.styleColor);
+                    v3.outlineColor = set_color(v3.styleColorLine);
+                    delete v3.styleColor;
+                    delete v3.styleColorLine;
+
+                    v3.pattern ? (typeof v3.pattern == 'object' ? v3.pattern : v3.pattern = v3.pattern.split(',').map(Number)) : v3.pattern;
+                });
+            }
+
+            if (v2.labelsInfo) {
+                v2.labelsInfo.map((v3, i3) => {
+                    v3.color = set_color(v3.labelColorFont);
+                    v3.style.color = set_color(v3.style.labelColor);
+                    v3.style.outlineColor = set_color(v3.style.labelColorLine);
+                    delete v3.labelColorFont;
+                    delete v3.style.labelColor;
+                    delete v3.style.labelColorLine;
+                })
+            }
+
+            if (v2.conditions) {
+                var isArray = Object.prototype.toString.call(v2.conditions.values) === '[object Array]';
+                v2.conditions.values ? (isArray ? v2.conditions.values : v2.conditions.values = v2.conditions.values.split(',')) : v2.conditions.values = [];
+
+                if (v2.conditions.subConditions) {
+                    v2.conditions.subConditions.map((v3, i3) => {
+                        var isArray1 = Object.prototype.toString.call(v3.values) === '[object Array]';
+                        v3.values ? (isArray1 ? v3.values : v3.values = v3.values.split(',')) : v3.values = [];
+                    })
+                }
+            }
+        })
+    });
+
+    var updateBody = JSON.stringify(serverInfoData);
+    $.ajax({
+        url: ctx + 'wmsService/update',
+        type: 'post',
+        data: updateBody,
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(res) {
+            if (res.body.resultMsg == 'success') {
+                openMsg(res.body.resultMsg, 'success');
+                this.getEditList();
+            }
+        }
+    })
+}
+
+
+
+/**************************************************************************** 事件处理操作 **************************************************************************/
+/* 服务编辑 */
+function serviceEdit(id) {
+    currService = serviceList.filter(item => item.serviceId == id)[0];
+    $('#currServiceBox').remove();
+    $('body').append(`<div id="currServiceBox"><aside></aside><div><div class="currServiceBox-header">基本信息<span class="currServiceBox-close">&times;</span></div><div class="currServiceBox-content"><div id="currServiceBoxContent"></div></div><div class="currServiceBox-footer"><button class="currServiceBox-submit">提交</button><button class="currServiceBox-close">返回</button></div></div></div>`);
+
+    if (!currService) return false;
+
+    serviceInfoBox();
+    if (currService.layersInfo) {
+        currServiceRenderList();
+    }
+
+    $(".showAlpha").spectrum({
+        preferredFormat: "rgb",
+        showInput: true,
+        showAlpha: true,
+        showPalette: true,
+        palette: [
+            ["rgba(255, 255, 255, 0)", "rgb(255, 255, 255, 1)", "red", "green", "blue"]
+        ]
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .addFeature', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        addFeature(currService.layersInfo, selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .delFeature', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        delFeature(currService.layersInfo, selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .addClassInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        addClassInfo(currService.layersInfo[selkey].classesInfo, C_selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .delClassInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        delClassInfo(currService.layersInfo[selkey].classesInfo, C_selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .addStyleInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let S_selkey = Number($(this).parents('.stylesInfo').attr('selkey'));
+        addStyleInfo(currService.layersInfo[selkey].classesInfo[C_selkey].stylesInfo, S_selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .delStyleInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let S_selkey = Number($(this).parents('.stylesInfo').attr('selkey'));
+        delStyleInfo(currService.layersInfo[selkey].classesInfo[C_selkey].stylesInfo, S_selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .addLabelInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let S_selkey = Number($(this).parents('.labelsInfo').attr('selkey'));
+        addLabelInfo(currService.layersInfo[selkey].classesInfo[C_selkey].labelsInfo, S_selkey);
+    });
+
+    $('#currServiceBoxContent').on('click', '.detailsx1 summary .delLabelInfo', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let S_selkey = Number($(this).parents('.labelsInfo').attr('selkey'));
+        delLabelInfo(currService.layersInfo[selkey].classesInfo[C_selkey].labelsInfo, S_selkey);
+    });
+
+    $('#currServiceBoxContent').on('change', '.serviceInfo>.sub-list>.sub-list-li>input', function() {
+        let selval = $(this).attr('selval');
+        currService[selval] = $(this).val();
+    });
+
+    $('#currServiceBoxContent').on('change', '.layersInfo>.sub-list>.sub-list-li>input,.layersInfo>.sub-list>.sub-list-li>select', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let selval = $(this).attr('selval');
+        if (selval == 'status')
+            currService.layersInfo[selkey][selval] = $(this).prop('checked');
+        else
+            currService.layersInfo[selkey][selval] = $(this).val();
+    });
+
+    $('#currServiceBoxContent').on('change', '.classesInfo>.sub-list>.sub-list-li>input', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let selval = $(this).attr('selval');
+        currService.layersInfo[selkey].classesInfo[C_selkey][selval] = $(this).val();
+    });
+
+    $('#currServiceBoxContent').on('change', '.stylesInfo>.sub-list>.sub-list-li>input,.stylesInfo>.sub-list>.sub-list-li>select', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let S_selkey = Number($(this).parents('.stylesInfo').attr('selkey'));
+        let selval = $(this).attr('selval');
+        currService.layersInfo[selkey].classesInfo[C_selkey].stylesInfo[S_selkey][selval] = $(this).val();
+    });
+
+    $('#currServiceBoxContent').on('change', '.labelsInfo>.sub-list>.sub-list-li>input,.labelsInfo>.sub-list>.sub-list-li>select', function() {
+        let selkey = Number($(this).parents('.layersInfo').attr('selkey'));
+        let C_selkey = Number($(this).parents('.classesInfo').attr('selkey'));
+        let L_selkey = Number($(this).parents('.labelsInfo').attr('selkey'));
+        let selval = $(this).attr('selval');
+        if (selval == 'style.labelColor' || selval == 'style.labelColorLine')
+            currService.layersInfo[selkey].classesInfo[C_selkey].labelsInfo[L_selkey][selval.split('.')[0]][selval.split('.')[1]] = $(this).val();
+        else
+            currService.layersInfo[selkey].classesInfo[C_selkey].labelsInfo[L_selkey][selval] = $(this).val();
+    });
+
+    $('#currServiceBoxContent').on('click', '.stylesInfo>.sub-list>.symbolName-imgbox>.symbolName-cont>img', function() {
+        var symbolNamePath = $(this).attr('name');
+        $(this).parents('.stylesInfo').find('input[selval=symbolName]').val(symbolNamePath);
+        $('.stylesInfo>.sub-list>.sub-list-li>input').change();
+        $('.stylesInfo>.sub-list .symbolName-close').click();
+    });
+
+    $('#currServiceBoxContent').on('click', '.stylesInfo>.sub-list .symbolName-close', function() {
+        $('.symbolName-imgbox').fadeOut();
+    });
+
+    $('#currServiceBoxContent').on('click', '.stylesInfo>.sub-list>.sub-list-li>input[selval=symbolName]', function() {
+        $('.symbolName-imgbox').fadeIn();
+    });
+
+    $('#currServiceBox').on('click', '.currServiceBox-submit', function() {
+        updateForm();
+        $('#currServiceBox').remove();
+    });
+
+    $('#currServiceBox').on('click', '.currServiceBox-close', function() {
+        $('#currServiceBox, .sp-container').remove();
+    });
+}

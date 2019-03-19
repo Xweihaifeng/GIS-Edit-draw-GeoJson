@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://localhost:8081/index -->
+<html xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="edge">
+    <title>IGIS管理系统</title>
+    <link rel="shortcut icon" type="image/png" href="./IGIS管理系统_files/favicon.ico">
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="./IGIS管理系统_files/jquery.scrollbar.css">
+    <!-- App styles -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/app.css">
+    <!-- Bootstrap Table -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/bootstrap-table.css">
+    <!-- animate -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/animate.min.css">
+    <!-- multiple-select -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/multiple-select.css">
+    <!-- jsTree -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/style.min.css">
+    <!-- treeTable -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/jquery.treegrid.css">
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/sweetalert2.css">
+    <!-- datarangepicker -->
+    <link rel="stylesheet" href="./IGIS管理系统_files/daterangepicker.css">
+    
+<!--     <link rel="stylesheet" data-th-href="@{js/assets/css/style.css}"> -->
+<!--     <link rel="stylesheet" data-th-href="@{js/assets/css/bootstrap.min.css}"> -->
+<!--     <link rel="stylesheet" data-th-href="@{js/assets/css/fileinput.min.css}"> -->
+<!--     <link rel="stylesheet" data-th-href="@{js/assets/css/glyphicons.css}"> -->
+<style>.toggle-switch__checkbox:checked ~ .toggle-switch__helper:after{background-color: #32c787}</style><style>.btn-save{background: #32c787; color: #fff }</style><style>.custom-control-input:checked ~ .custom-control-indicator{ border-color: #32c787 }</style><style>.custom-radio .custom-control-indicator:before{background-color: #32c787}</style><style>.navigation__active > a:hover{color: #32c787 !important;}</style><style>.navigation__active{color: #32c787;}</style><style>.fixed-table-pagination .pagination li.active a{ background:#32c787;border: 1px solid #32c787}</style><style>.form-group__bar:before, .form-group__bar:after {background-color: #32c787}</style><style>.daterangepicker td.active, .daterangepicker td.active:hover,.end-date {background-color: #32c787 !important}</style><style>.daterangepicker td.in-range {background-color:rgba(50,199,135,0.1)}</style></head>
+<body data-ma-theme="green">
+    <div><script src="./IGIS管理系统_files/jquery.min.js.下载"></script>
+<script src="./IGIS管理系统_files/tether.min.js.下载"></script>
+<script src="./IGIS管理系统_files/bootstrap.min.js.下载"></script>
+<script src="./IGIS管理系统_files/waves.min.js.下载"></script>
+<script src="./IGIS管理系统_files/jquery.scrollbar.min.js.下载"></script>
+<script src="./IGIS管理系统_files/jquery-scrollLock.min.js.下载"></script>
+<script src="./IGIS管理系统_files/bootstrap-notify.min.js.下载"></script>
+
+<script src="./IGIS管理系统_files/multiple-select.js.下载"></script>
+<script src="./IGIS管理系统_files/dropzone.min.js.下载"></script>
+<script src="./IGIS管理系统_files/sweetalert2.js.下载"></script>
+<script src="./IGIS管理系统_files/jquery.validate.min.js.下载"></script>
+<script src="./IGIS管理系统_files/additional-methods.min.js.下载"></script>
+<script src="./IGIS管理系统_files/messages_zh.min.js.下载"></script>
+
+<script src="./IGIS管理系统_files/jstree.js.下载"></script>
+
+<script src="./IGIS管理系统_files/bootstrap-table.min.js.下载"></script>
+<script src="./IGIS管理系统_files/bootstrap-table-zh-CN.js.下载"></script>
+
+<script src="./IGIS管理系统_files/jquery.treegrid.js.下载"></script>
+<!-- <script data-th-src="@{js/jqTreeGrid/jquery.treegrid.bootstrap3.js}"></script> -->
+<script src="./IGIS管理系统_files/jquery.treegrid.extension.js.下载"></script>
+<!-- <script data-th-src="@{js/jqTreeGrid/tree.table.js}"></script> -->
+
+<script src="./IGIS管理系统_files/highcharts.js.下载"></script>
+<script src="./IGIS管理系统_files/exporting.js.下载"></script>
+<script src="./IGIS管理系统_files/highcharts-zh_CN.js.下载"></script>
+
+<script src="./IGIS管理系统_files/moment.min.js.下载"></script>
+<script src="./IGIS管理系统_files/daterangepicker.js.下载"></script>
+
+<script src="./IGIS管理系统_files/common.js.下载"></script>
+
+</div>
+    <main class="main">
+        <div><div class="page-loader" style="display: none;">
+    <div class="page-loader__spinner">
+        <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+        </svg>
+    </div>
+</div>
+<header class="header">
+    <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+        <div class="navigation-trigger__inner">
+            <i class="navigation-trigger__line"></i>
+            <i class="navigation-trigger__line"></i>
+            <i class="navigation-trigger__line"></i>
+        </div>
+    </div>
+    <div class="header__logo hidden-sm-down">
+        <h1><a href="http://localhost:8081/index">IGIS 管理系统</a></h1>
+    </div>
+    <ul class="top-nav">
+        <li class="dropdown hidden-xs-down">
+            <a href="http://localhost:8081/index" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-item theme-switch">
+                    	主题切换
+                    <div class="btn-group btn-group--colors mt-2" data-toggle="buttons">
+                        <label class="btn bg-green active">
+                            <input type="radio" value="green" autocomplete="off" checked="">
+                        </label>
+                        <label class="btn bg-blue">
+                            <input type="radio" value="blue" autocomplete="off">
+                        </label>
+                        <label class="btn bg-red">
+                            <input type="radio" value="red" autocomplete="off">
+                        </label>
+                        <label class="btn bg-orange">
+                            <input type="radio" value="orange" autocomplete="off">
+                        </label>
+                        <label class="btn bg-teal">
+                            <input type="radio" value="teal" autocomplete="off">
+                        </label>
+                        <br>
+                        <label class="btn bg-cyan">
+                            <input type="radio" value="cyan" autocomplete="off">
+                        </label>
+                        <label class="btn bg-blue-grey">
+                            <input type="radio" value="blue-grey" autocomplete="off">
+                        </label>
+                        <label class="btn bg-purple">
+                            <input type="radio" value="purple" autocomplete="off">
+                        </label>
+                        <label class="btn bg-indigo">
+                            <input type="radio" value="indigo" autocomplete="off">
+                        </label>
+                        <label class="btn bg-lime">
+                            <input type="radio" value="lime" autocomplete="off">
+                        </label>
+                    </div>
+                </div>
+                <a href="http://localhost:8081/index#" class="dropdown-item" onclick="fullScreen(this)">全屏</a>
+                <a class="dropdown-item" href="http://localhost:8081/logout">退出</a>
+            </div>
+        </li>
+    </ul>
+</header></div>
+        <div><style>
+.navigation { margin-left: 0px; height: 80%; }
+.navigation div { padding-left: 1px; }
+.navigation div ul { overflow: hidden; display: none; height: auto; margin: 0; margin-left: -.8rem; }
+.navigation span { display: block; line-height: 25px; padding: .5rem .5rem; cursor: pointer; }
+.navigation span:hover { background-color: rgba(0, 0, 0, 0.03); }
+.navigation a { color: #333; text-decoration: none; }
+.navigation a:hover { color: #06F; }
+</style>
+<aside class="sidebar">
+    <div class="scroll-wrapper scrollbar-inner" style="position: relative;"><div class="scrollbar-inner scroll-content" style="height: 812px; margin-bottom: 0px; margin-right: 0px; max-height: none;">
+        <div class="user">
+            <div class="user__info" data-toggle="dropdown">
+                <img class="user__img" src="./IGIS管理系统_files/default.jpg">
+                <div>
+                    <div class="user__name">admin</div>
+                    <div class="user__email">leiwangs@isoftstone.com</div>
+                </div>
+            </div>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="http://localhost:8081/index#" id="user__profile">个人信息</a>
+                <a class="dropdown-item" href="http://localhost:8081/index#" data-toggle="modal" data-target="#update-password">修改密码</a>
+            </div>
+        </div>
+        <div id="navigation" class="navigation"><div><span><i class="zmdi zmdi-settings"></i>&nbsp;&nbsp;系统管理</span><ul><div><span name="user" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;用户管理</span><ul></ul></div><div><span name="role" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;角色管理</span><ul></ul></div><div><span name="menu" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;菜单管理</span><ul></ul></div><div><span name="dept" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;部门管理</span><ul></ul></div><div><span name="dict" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;字典管理</span><ul></ul></div></ul></div><div><span><i class="zmdi zmdi-shield-security"></i>&nbsp;&nbsp;系统监控</span><ul><div><span name="session" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;在线用户</span><ul></ul></div><div><span name="log" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;系统日志</span><ul></ul></div><div><span name="redis/info" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;Redis监控</span><ul></ul></div><div><span name="redis/terminal" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;Redis终端</span><ul></ul></div></ul></div><div><span><i class="zmdi zmdi-globe-alt"></i>&nbsp;&nbsp;网络资源</span><ul><div><span name="weather" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;天气查询</span><ul></ul></div><div><span name="article" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;每日一文</span><ul></ul></div><div><span><i class="null"></i>&nbsp;&nbsp;影视资讯</span><ul><div><span name="movie/hot" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;正在热映</span><ul></ul></div><div><span name="movie/coming" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;即将上映</span><ul></ul></div></ul></div><div><span><i class="null"></i>&nbsp;&nbsp;One 一个</span><ul><div><span name="one/painting" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;绘画</span><ul></ul></div><div><span name="one/yuwen" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;语文</span><ul></ul></div><div><span name="one/essay" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;散文</span><ul></ul></div></ul></div></ul></div><div><span><i class="zmdi zmdi-alarm"></i>&nbsp;&nbsp;任务调度</span><ul><div><span name="job" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;定时任务</span><ul></ul></div><div><span name="jobLog" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;调度日志</span><ul></ul></div></ul></div><div><span><i class="zmdi zmdi-case-check"></i>&nbsp;&nbsp;数据管理</span><ul><div><span name="file" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;文件管理</span><ul></ul></div><div><span><i class=""></i>&nbsp;&nbsp;库存储</span><ul></ul></div><div><span name="category" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;分类管理</span><ul></ul></div></ul></div><div><span><i class="zmdi zmdi-reader"></i>&nbsp;&nbsp;服务管理</span><ul><div><span name="gisService/list" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;服务配置</span><ul></ul></div><div><span name="gisService/load" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;预览</span><ul></ul></div><div><span name="wmsService/update" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;修改</span><ul></ul></div><div><span name="gisService/createServiceByFile?dataPath=E:/testData/ShapeFile/Boundary/world&amp;serviceName=gisserver_wms_shape_boundary_world" onclick="loadMain(this);"><i class=""></i>&nbsp;&nbsp;创建服务</span><ul></ul></div></ul></div></div>
+    </div><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar" style="width: 100px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar" style="height: 100px;"></div></div></div></div>
+</aside>
+</div>
+        <div><style>
+    ul,li { list-style: none; }
+    .main-content { position: relative; padding-bottom: 20px; }
+    .movie-img { background-size: cover; background-repeat: no-repeat; background-clip: padding-box; list-style: none; }
+    .aspectration { position: relative; height: 0; width: 100%; }
+    .aspectration[data-ratio="16:9"] { padding-top: 145%; }
+    .groups__item { margin-bottom: 15px; transition: box-shadow .25s; transition-timing-function: ease-out; }
+    .groups__item:hover { box-shadow: 2px 2px 10px rgba(2, 2, 2, 0.5); }
+    .col-xl-3 { padding: 0 7.5px 0 7.5px; }
+    .groups__info>h3 { overflow: hidden; text-overflow:ellipsis; white-space: nowrap; text-align: left; text-indent: 0.15rem; font-size: 0.85rem; }
+    .widget-service-type-epsg { color: #a2a2a2; text-align: left; text-indent: 0.25rem; font-size: 0.85rem; }
+    @media (min-width: 1200px) { .col-xl-3 { flex: auto; max-width: 16.66667%;} }
+</style>
+
+<link rel="stylesheet" href="./IGIS管理系统_files/spectrum.css">
+<link rel="stylesheet" href="./IGIS管理系统_files/myPagination.css">
+<link rel="stylesheet" href="./IGIS管理系统_files/home.css">
+
+<section class="content">
+    <header class="content__title">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">主页</li>
+        </ol>
+    </header>
+    <div class="main-content">
+        <div class="card-block row" style="padding:0;"><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;1&#39;)"></li><div class="groups__info"><h3 title="gisserver_wms_shape_fengdong">gisserver_wms_shape_fengdong</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;gisserver_wms_shape_fengdong&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;1&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;gisserver_wms_shape_fengdong&#39;,&#39;WMS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;1547624201035&#39;)"></li><div class="groups__info"><h3 title="test1">test1</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;test1&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;1547624201035&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;test1&#39;,&#39;WMS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;1547624285800&#39;)"></li><div class="groups__info"><h3 title="world_borders_test">world_borders_test</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;world_borders_test&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;1547624285800&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;world_borders_test&#39;,&#39;WMS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;1547809987233&#39;)"></li><div class="groups__info"><h3 title="world_borders_test1">world_borders_test1</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;world_borders_test1&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;1547809987233&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;world_borders_test1&#39;,&#39;WMS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;1549004067101&#39;)"></li><div class="groups__info"><h3 title="gisserver_wms_tif_global_dem">gisserver_wms_tif_global_dem</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;gisserver_wms_tif_global_dem&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;1549004067101&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;gisserver_wms_tif_global_dem&#39;,&#39;WMS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;2&#39;)"></li><div class="groups__info"><h3 title="gisserver_wfs_shape_fengdong">gisserver_wfs_shape_fengdong</h3><div class="widget-service-type-epsg">类型：WFS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;gisserver_wfs_shape_fengdong&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;2&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;gisserver_wfs_shape_fengdong&#39;,&#39;WFS&#39;);">×</a></div></div></div><div class="col-xl-3 col-lg-2 col-md-3 col-sm-4 col-xs-6 col-6"><div class="groups__item"><li class="movie-img aspectration" data-ratio="16:9" style="padding:0;background-size:cover;height:124px;cursor:pointer;background-image:url(../../../img/map1765.png)" onclick="getMoiveDetail(&#39;3&#39;)"></li><div class="groups__info"><h3 title="gisserver_wms_shape_boundary_world">gisserver_wms_shape_boundary_world</h3><div class="widget-service-type-epsg">类型：WMS 坐标系：4326</div></div><div class="service-action"><a class="service-item" href="javascript:void(0)" title="服务切片" onclick="serviceStart(&#39;gisserver_wms_shape_boundary_world&#39;)">▶</a><a class="service-item" href="javascript:void(0)" title="服务编辑" onclick="serviceEdit(&#39;3&#39;)">✎</a><a class="service-item" href="javascript:void(0)" title="服务删除" onclick="serviceDelete(&#39;gisserver_wms_shape_boundary_world&#39;,&#39;WMS&#39;);">×</a></div></div></div></div>
+    <div class="modal fade" id="service_layer_detail" data-keyboard="false" data-backdrop="static" tabindex="-1"></div><div id="page_pagination" class="page_pagination"><ul><li>首页</li><li class="disabled">«</li><li class="active">1</li><li class="disabled">»</li><li>尾页</li><li class="totalPage"><span>跳转到</span><input type="number"><span>页</span></li><li class="totalPage">共&nbsp;1&nbsp;页</li><li class="totalPage">每页&nbsp;12&nbsp;条</li><li class="totalPage">合计&nbsp;7&nbsp;条数据</li></ul></div></div>
+    <div><footer class="footer hidden-xs-down">
+    <p>© <a href="http://localhost:8081/index#" target="_blank">IGIS</a> All rights reserved.</p>
+</footer></div>
+</section>
+
+
+<script src="./IGIS管理系统_files/spectrum.js.下载"></script>
+<script src="./IGIS管理系统_files/myPagination.js.下载"></script>
+<script src="./IGIS管理系统_files/home.js.下载"></script>
+<script src="./IGIS管理系统_files/updateService.js.下载"></script></div>
+    </main>
+    <div><div class="modal fade" id="update-password" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left">修改密码</h3>
+            </div>
+            <div class="modal-body">
+                <form id="update-password-form" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	旧密码：
+					            </span>
+                                <div class="form-group">
+                                    <input type="password" name="oldPassword" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 新密码：
+					            </span>
+                                <div class="form-group">
+                                    <input type="password" id="newPassword" name="newPassword" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 再次确认：
+					            </span>
+                                <div class="form-group">
+                                    <input type="password" name="confirm" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save">保存</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./IGIS管理系统_files/updatePassword.js.下载"></script></div>
+
+<script>
+	var ctx = "\/";
+	var userName = "admin";
+	var theme = "green";
+	var avatar = ctx + "img/avatar/" + "default.jpg";
+</script>
+<script src="./IGIS管理系统_files/index.js.下载"></script>
+<div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"><div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div></div><div id="currServiceBox"><aside></aside><div><div class="currServiceBox-header">基本信息<span class="currServiceBox-close">×</span></div><div class="currServiceBox-content"><div id="currServiceBoxContent"><details class="serviceInfo" open=""><!-- 服务信息 -->
+        <summary> 服务信息 </summary>
+        <div class="sub-list">
+            <aside class="sub-list-li"><mark> 服务名称: </mark><input type="search" selval="serviceName" value="test1" readonly=""></aside>
+            <aside class="sub-list-li"><mark> 活动类型: </mark><input type="search" selval="serviceType" value="WMS" readonly=""></aside>
+            <aside class="sub-list-li"><mark> 中心点: </mark><input type="search" selval="centerPoint" value="-0.000000,-2.7148657"></aside>
+            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="serverColorBg" value="rgba(255,255,255,0)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgba(255, 255, 255, 0);"></div></div><div class="sp-dd">▼</div></div></aside>
+            <aside class="sub-list-li"><mark> 服务地址: </mark><input type="search" selval="serviceUrl" value="/WMSServices/loadStdout?serviceName=test1" readonly=""></aside>
+        </div>
+    </details><details class="detailsx1 layersInfo" open="" selkey="0"><!-- 服务信息 -->
+        <summary> layer_world_borders <button class="addFeature">+</button><button class="delFeature">-</button></summary>
+        <div class="sub-list">
+            <aside class="sub-list-li"><mark> 图层编号: </mark><input type="number" selval="layerId" min="0" value="0"></aside>
+            <aside class="sub-list-li"><mark> 图层名称: </mark><input type="search" selval="layerName" value="layer_world_borders"></aside>
+            <aside class="sub-list-li"><mark> 数据类型: </mark><input type="search" selval="geoType1" value="面" readonly=""></aside>
+            <aside class="sub-list-li"><mark> 图层状态: </mark><input type="checkbox" selval="status" class="switch-btn switch-btn-animbg" checked="true"></aside>
+            <aside class="sub-list-li"><mark> 标注名称: </mark><select selval="labelItem"><option value="0" selected="">0</option><option value="area"> area </option><option value="subregion"> subregion </option><option value="fips"> fips </option><option value="created_at"> created_at </option><option value="lon"> lon </option><option value="OBJECTID"> OBJECTID </option><option value="Shape_Leng"> Shape_Leng </option><option value="pop2005"> pop2005 </option><option value="updated_at"> updated_at </option><option value="Shape_Area"> Shape_Area </option><option value="name"> name </option><option value="un"> un </option><option value="region"> region </option><option value="iso2"> iso2 </option><option value="mapvis_id"> mapvis_id </option><option value="lat"> lat </option><option value="iso3"> iso3 </option></select></aside>
+            <aside class="sub-list-li"><mark> 图层坐标系: </mark><input type="search" selval="layerProj" value="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs" readonly=""></aside>
+            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="0"></aside>
+            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="0"></aside>
+        </div>
+        <details class="detailsx1 classesInfo" open="" selkey="0">
+                <summary> 样式表： <button class="addClassInfo">+</button><button class="delClassInfo">-</button></summary>
+                <div class="sub-list">
+                    <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="0"></aside>
+                    <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="0"></aside>
+                </div>
+                <details class="detailsx1 conditions" open="" selkey="0">
+                    <summary> 过滤条件 </summary>
+                    <div class="sub-list">
+                        <aside class="sub-list-li">
+                            <div>
+                                <hgroup>
+                                    <span style="width:100px">字段名</span><span style="width:138px">类型</span><span style="width:65px">运算关系</span><span style="width:138px">字段值</span>
+                                </hgroup>
+                                <hgroup>
+                        <select value="fclass" change="cascade(fieldType[k1],item.field,item)"><option value=""></option><option value="area"> area </option><option value="subregion"> subregion </option><option value="fips"> fips </option><option value="created_at"> created_at </option><option value="lon"> lon </option><option value="OBJECTID"> OBJECTID </option><option value="Shape_Leng"> Shape_Leng </option><option value="pop2005"> pop2005 </option><option value="updated_at"> updated_at </option><option value="Shape_Area"> Shape_Area </option><option value="name"> name </option><option value="un"> un </option><option value="region"> region </option><option value="iso2"> iso2 </option><option value="mapvis_id"> mapvis_id </option><option value="lat"> lat </option><option value="iso3"> iso3 </option></select>
+                        <input type="text" value="String" readonly="">
+                        <select value="item.logical"><option key="&gt;" value="&gt;"> &gt; </option>,<option key="&lt;" value="&lt;"> &lt; </option>,<option key="=" value="="> = </option>,<option key="&gt;=" value="&gt;="> &gt;= </option>,<option key="&lt;=" value="&lt;="> &lt;= </option>,<option key="!=" value="!="> != </option>,<option key="like" value="like"> like </option>,<option key="in" value="in"> in </option>,<option key="not in" value="not in"> not in </option></select>
+                        <input type="text" value="12">
+                        <button class="addRow">+</button><button class="delRow">-</button>
+                    </hgroup><hgroup>
+                        <select value="osm_id" change="cascade(fieldType[k1],item.field,item)"><option value=""></option><option value="area"> area </option><option value="subregion"> subregion </option><option value="fips"> fips </option><option value="created_at"> created_at </option><option value="lon"> lon </option><option value="OBJECTID"> OBJECTID </option><option value="Shape_Leng"> Shape_Leng </option><option value="pop2005"> pop2005 </option><option value="updated_at"> updated_at </option><option value="Shape_Area"> Shape_Area </option><option value="name"> name </option><option value="un"> un </option><option value="region"> region </option><option value="iso2"> iso2 </option><option value="mapvis_id"> mapvis_id </option><option value="lat"> lat </option><option value="iso3"> iso3 </option></select>
+                        <input type="text" value="String" readonly="">
+                        <select value="item.logical"><option key="&gt;" value="&gt;"> &gt; </option>,<option key="&lt;" value="&lt;"> &lt; </option>,<option key="=" value="="> = </option>,<option key="&gt;=" value="&gt;="> &gt;= </option>,<option key="&lt;=" value="&lt;="> &lt;= </option>,<option key="!=" value="!="> != </option>,<option key="like" value="like"> like </option>,<option key="in" value="in"> in </option>,<option key="not in" value="not in"> not in </option></select>
+                        <input type="text" value="23">
+                        <button class="addRow">+</button><button class="delRow">-</button>
+                    </hgroup><hgroup>
+                        <select value="name" change="cascade(fieldType[k1],item.field,item)"><option value=""></option><option value="area"> area </option><option value="subregion"> subregion </option><option value="fips"> fips </option><option value="created_at"> created_at </option><option value="lon"> lon </option><option value="OBJECTID"> OBJECTID </option><option value="Shape_Leng"> Shape_Leng </option><option value="pop2005"> pop2005 </option><option value="updated_at"> updated_at </option><option value="Shape_Area"> Shape_Area </option><option value="name"> name </option><option value="un"> un </option><option value="region"> region </option><option value="iso2"> iso2 </option><option value="mapvis_id"> mapvis_id </option><option value="lat"> lat </option><option value="iso3"> iso3 </option></select>
+                        <input type="text" value="String" readonly="">
+                        <select value="item.logical"><option key="&gt;" value="&gt;"> &gt; </option>,<option key="&lt;" value="&lt;"> &lt; </option>,<option key="=" value="="> = </option>,<option key="&gt;=" value="&gt;="> &gt;= </option>,<option key="&lt;=" value="&lt;="> &lt;= </option>,<option key="!=" value="!="> != </option>,<option key="like" value="like"> like </option>,<option key="in" value="in"> in </option>,<option key="not in" value="not in"> not in </option></select>
+                        <input type="text" value="768">
+                        <button class="addRow">+</button><button class="delRow">-</button>
+                    </hgroup><hgroup>
+                        <select value="code" change="cascade(fieldType[k1],item.field,item)"><option value=""></option><option value="area"> area </option><option value="subregion"> subregion </option><option value="fips"> fips </option><option value="created_at"> created_at </option><option value="lon"> lon </option><option value="OBJECTID"> OBJECTID </option><option value="Shape_Leng"> Shape_Leng </option><option value="pop2005"> pop2005 </option><option value="updated_at"> updated_at </option><option value="Shape_Area"> Shape_Area </option><option value="name"> name </option><option value="un"> un </option><option value="region"> region </option><option value="iso2"> iso2 </option><option value="mapvis_id"> mapvis_id </option><option value="lat"> lat </option><option value="iso3"> iso3 </option></select>
+                        <input type="text" value="int" readonly="">
+                        <select value="item.logical"><option key="&gt;" value="&gt;"> &gt; </option>,<option key="&lt;" value="&lt;"> &lt; </option>,<option key="=" value="="> = </option>,<option key="&gt;=" value="&gt;="> &gt;= </option>,<option key="&lt;=" value="&lt;="> &lt;= </option>,<option key="!=" value="!="> != </option>,<option key="like" value="like"> like </option>,<option key="in" value="in"> in </option>,<option key="not in" value="not in"> not in </option></select>
+                        <input type="text" value="65">
+                        <button class="addRow">+</button><button class="delRow">-</button>
+                    </hgroup>
+                                <hgroup v-if="e2.conditions.subConditions &amp;&amp; e2.conditions.subConditions.length &gt; 1">
+                                    <mark> 逻辑关系: </mark>
+                                    <select value="and"><option value=""></option><option key="and" value="and"> and </option>,<option key="or" value="or"> or </option></select>
+                                </hgroup>
+                            </div>
+                        </aside>
+                    </div>
+                </details>
+                <details class="detailsx1 stylesInfo" open="" selkey="0">
+                        <summary> 样式： <button class="addStyleInfo">+</button><button class="delStyleInfo">-</button></summary>
+                        <div class="sub-list">
+                            <aside class="sub-list-li"><mark> 图标名称: </mark><select selval="symbolName"><option value="0" selected=""> 0 </option><option value="circlef"> circlef </option><option value="circle"> circle </option><option value="squaref"> squaref </option><option value="square"> square </option><option value="P"> P </option><option value="o-flag-trans"> o-flag-trans </option><option value="v-line"> v-line </option><option value="v-poly"> v-poly </option><option value="x-line"> x-line </option><option value="chess"> chess </option><option value="x-poly-fill"> x-poly-fill </option><option value="ind_marsh_poly"> ind_marsh_poly </option><option value="diag_dots"> diag_dots </option><option value="diag_holes"> diag_holes </option><option value="D:\iGisServer\data\Symbols\icons\sub_station.png"> sub_station </option></select></aside>
+                            <aside class="sub-list-li"><mark> 图标名称: </mark><input type="search" selval="symbolName" value="0" readonly=""></aside>
+                            <div class="symbolName-imgbox"><div class="symbolName-title"><span>图标列表</span><span class="symbolName-close">×</span></div><div class="symbolName-cont"><img src="./IGIS管理系统_files/favicon.ico" name="circlef" title="circlef"><img src="./IGIS管理系统_files/favicon.ico" name="circle" title="circle"><img src="./IGIS管理系统_files/favicon.ico" name="squaref" title="squaref"><img src="./IGIS管理系统_files/favicon.ico" name="square" title="square"><img src="./IGIS管理系统_files/favicon.ico" name="P" title="P"><img src="./IGIS管理系统_files/favicon.ico" name="o-flag-trans" title="o-flag-trans"><img src="./IGIS管理系统_files/favicon.ico" name="v-line" title="v-line"><img src="./IGIS管理系统_files/favicon.ico" name="v-poly" title="v-poly"><img src="./IGIS管理系统_files/favicon.ico" name="x-line" title="x-line"><img src="./IGIS管理系统_files/favicon.ico" name="chess" title="chess"><img src="./IGIS管理系统_files/favicon.ico" name="x-poly-fill" title="x-poly-fill"><img src="./IGIS管理系统_files/favicon.ico" name="ind_marsh_poly" title="ind_marsh_poly"><img src="./IGIS管理系统_files/favicon.ico" name="diag_dots" title="diag_dots"><img src="./IGIS管理系统_files/favicon.ico" name="diag_holes" title="diag_holes"><img src="./IGIS管理系统_files/favicon.ico" name="D:\iGisServer\data\Symbols\icons\sub_station.png" title="sub_station"></div></div>
+                            <aside class="sub-list-li"><mark> 大小: </mark><input type="number" selval="size" min="0" max="20" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 宽度: </mark><input type="number" selval="width" min="0" max="20" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 颜色: </mark><input type="search" selval="styleColor" value="rgba(199,185,178,255)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgb(199, 185, 178);"></div></div><div class="sp-dd">▼</div></div></aside>
+                            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="styleColorLine" value="rgba(110,110,110,255)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgb(110, 110, 110);"></div></div><div class="sp-dd">▼</div></div></aside>
+                            <aside class="sub-list-li"><mark> 边线宽度: </mark><input type="number" selval="outlineWidth" min="0" max="20" value="1"></aside>
+                            <aside class="sub-list-li"><mark> 转角样式: </mark><input type="text" selval="linejoin" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 间隔显示: </mark><input type="text" selval="pattern" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 间隔距离: </mark><input type="text" selval="gap" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 初始位置: </mark><input type="text" selval="initgap" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="0"></aside>
+                        </div>
+                    </details>
+                <details class="detailsx1 labelsInfo" open="" selkey="0">
+                        <summary> 标注信息： <button class="addLabelInfo">+</button><button class="delLabelInfo">-</button></summary>
+                        <div class="sub-list">
+                            <aside class="sub-list-li"><mark> 字号: </mark><input type="number" selval="size" min="1" max="36" value="10"></aside>
+                            <aside class="sub-list-li"><mark> 位置: </mark><select selval="position"><option value="right" selected=""> right </option><option key="auto" value="auto"> auto </option>,<option key="top" value="top"> top </option>,<option key="right" value="right"> right </option>,<option key="bottom" value="bottom"> bottom </option>,<option key="left" value="left"> left </option>,<option key="center" value="center"> center </option>,<option key="left-top" value="left-top"> left-top </option>,<option key="right-top" value="right-top"> right-top </option>,<option key="left-bottom" value="left-bottom"> left-bottom </option>,<option key="right-bottom" value="right-bottom"> right-bottom </option></select></aside>
+                            <aside class="sub-list-li"><mark> 颜色: </mark><input type="search" selval="labelColorFont" value="rgba(255,255,255,0)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgba(255, 255, 255, 0);"></div></div><div class="sp-dd">▼</div></div></aside>
+                            <aside class="sub-list-li"><mark> 背景色: </mark><input type="search" selval="style.labelColor" value="rgba(255,255,255,0)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgba(255, 255, 255, 0);"></div></div><div class="sp-dd">▼</div></div></aside>
+                            <aside class="sub-list-li"><mark> 边框色: </mark><input type="search" selval="style.labelColorLine" value="rgba(255,255,255,0)" class="showAlpha" style="display: none;"><div class="sp-replacer sp-light"><div class="sp-preview"><div class="sp-preview-inner" style="background-color: rgba(255, 255, 255, 0);"></div></div><div class="sp-dd">▼</div></div></aside>
+                            <aside class="sub-list-li"><mark> 最大长度: </mark><input type="number" selval="maxLength" min="1" max="1000" value="6"></aside>
+                            <aside class="sub-list-li"><mark> 最小显示级别: </mark><input type="number" selval="minLevel" min="0" max="20" value="0"></aside>
+                            <aside class="sub-list-li"><mark> 最大显示级别: </mark><input type="number" selval="maxLevel" min="0" max="20" value="0"></aside>
+                        </div>
+                    </details>
+            </details>
+    </details></div></div><div class="currServiceBox-footer"><button class="currServiceBox-submit">提交</button><button class="currServiceBox-close">返回</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light sp-thumb-active"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 0, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 85, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(199, 185, 178, 0), rgb(199, 185, 178));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 0, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(110, 110, 110, 0), rgb(110, 110, 110));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light sp-thumb-active"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 0, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light sp-thumb-active"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 0, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div><div class="sp-container sp-hidden sp-light sp-alpha-enabled sp-palette-buttons-disabled sp-initial-disabled"><div class="sp-palette-container"><div class="sp-palette sp-thumb sp-cf"><div class="sp-cf sp-palette-row sp-palette-row-0"><span title="rgba(255, 255, 255, 0)" data-color="rgba(255, 255, 255, 0)" class="sp-thumb-el sp-thumb-light sp-thumb-active"><span class="sp-thumb-inner" style="background-color:rgba(255, 255, 255, 0);"></span></span><span title="rgb(255, 255, 255)" data-color="rgb(255, 255, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 255, 255);"></span></span><span title="rgb(255, 0, 0)" data-color="rgb(255, 0, 0)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(255, 0, 0);"></span></span><span title="rgb(0, 128, 0)" data-color="rgb(0, 128, 0)" class="sp-thumb-el sp-thumb-dark"><span class="sp-thumb-inner" style="background-color:rgb(0, 128, 0);"></span></span><span title="rgb(0, 0, 255)" data-color="rgb(0, 0, 255)" class="sp-thumb-el sp-thumb-light"><span class="sp-thumb-inner" style="background-color:rgb(0, 0, 255);"></span></span></div><div class="sp-cf sp-palette-row sp-palette-row-selection"></div></div><div class="sp-palette-button-container sp-cf"><button type="button" class="sp-palette-toggle">less</button></div></div><div class="sp-picker-container"><div class="sp-top sp-cf"><div class="sp-fill"></div><div class="sp-top-inner"><div class="sp-color" style="background-color: rgb(255, 0, 0);"><div class="sp-sat"><div class="sp-val"><div class="sp-dragger" style="top: 0px; left: 0px;"></div></div></div></div><div class="sp-clear sp-clear-display" title="Clear Color Selection" style="display: none;"></div><div class="sp-hue"><div class="sp-slider" style="top: 0px;"></div></div></div><div class="sp-alpha"><div class="sp-alpha-inner" style="background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));"><div class="sp-alpha-handle" style="left: 0px;"></div></div></div></div><div class="sp-input-container sp-cf"><input class="sp-input" type="text" spellcheck="false"></div><div class="sp-initial sp-thumb sp-cf"></div><div class="sp-button-container sp-cf"><a class="sp-cancel" href="http://localhost:8081/index#">cancel</a><button type="button" class="sp-choose">choose</button></div></div></div></body></html>

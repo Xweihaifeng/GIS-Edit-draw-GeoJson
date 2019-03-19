@@ -1,0 +1,22 @@
+{
+	"type": "FeatureCollection",
+	"srid": "4326",
+	"geoType": "point",
+	"fieldsInfo": [],
+	"features": [{
+		"type": "Feature",
+		"id": 0,
+		"properties": {
+			"osm_id": "312727777",
+			"code": 2302,
+			"fclass": "fast_food",
+			"name": "High Fly Pizza",
+			"icon": "",
+			"display": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [108.942361, 34.260976]
+		}
+	}]
+}

@@ -1,0 +1,58 @@
+[class|=switch] {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 13px;
+    border-radius: 16px;
+    line-height: 32px;
+    -webkit-tap-highlight-color: transparent
+}
+
+.switch-on {
+    border: 1px solid #fff;
+    box-shadow: #fff 0 0 0 16px inset;
+    transition: border .4s, box-shadow .2s, background-color 1.2s;
+    background-color: #fff;
+    cursor: pointer
+}
+
+.slider {
+    position: absolute;
+    display: inline-block;
+    width: 22px;
+    height: 13px;
+    background: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .4);
+    border-radius: 16px;
+    left: 0;
+    top: 0
+}
+
+.switch-on .slider {
+    left: 20px;
+    transition: background-color .4s, left .2s
+}
+
+.switch-off {
+    border: 1px solid #dfdfdf;
+    transition: border .4s, box-shadow .4s;
+    background-color: #fff;
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    background-color: #fff;
+    cursor: pointer
+}
+
+.switch-off .slider {
+    left: 0;
+    transition: background-color .4s, left .2s
+}
+
+.switch-on.switch-disabled {
+    opacity: .5;
+    cursor: auto
+}
+
+.switch-off.switch-disabled {
+    background-color: #f0f0f0 !important;
+    cursor: auto
+}
