@@ -25,15 +25,15 @@
                     <img :src="imgList.feat_save" title="导出图层">
                     <img :src="imgList.feat_batch" title="批量导入图层">
                     <span>|</span>
-                    <img src="img/igis_icon.png" class="dot" id="addpoint" name="Point" title="添加点/图标">
-                    <img src="img/igis_line.png" class="lines" id="addline" name="LineString" title="添加线">
-                    <img src="img/igis_circle.png" class="plane" id="addCircle" name="Three" title="添加圆形">
-                    <img src="img/igis_three.png" class="plane" id="addThree" name="Three" title="添加三角形">
-                    <img src="img/igis_square.png" class="plane" id="addpolygon" name="Square" title="添加矩形">
-                    <img src="img/igis_five.png" class="plane" id="addFive" name="Five" title="添加五边形">
-                    <img src="img/igis_six.png" class="plane" id="addSix" name="Six" title="添加六边形">
-                    <img src="img/igis_six.png" class="plane" id="addSeven" name="Seven" title="添加七边形">
-                    <img src="img/igis_polygon.png" class="plane" id="addsquare" name="Polygon" title="添加多边形">
+                    <img :src="imgList.igis_icon" class="dot" id="addpoint" name="Point" title="添加点/图标">
+                    <img :src="imgList.igis_line" class="lines" id="addline" name="LineString" title="添加线">
+                    <img :src="imgList.igis_circle" class="plane" id="addCircle" name="Three" title="添加圆形">
+                    <img :src="imgList.igis_three" class="plane" id="addThree" name="Three" title="添加三角形">
+                    <img :src="imgList.igis_square" class="plane" id="addpolygon" name="Square" title="添加矩形">
+                    <img :src="imgList.igis_five" class="plane" id="addFive" name="Five" title="添加五边形">
+                    <img :src="imgList.igis_six" class="plane" id="addSix" name="Six" title="添加六边形">
+                    <img :src="imgList.igis_serve" class="plane" id="addSeven" name="Seven" title="添加七边形">
+                    <img :src="imgList.igis_polygon" class="plane" id="addsquare" name="Polygon" title="添加自定义多边形">
                 </li>
                 <li class="operatingMenu">
                     <div>伸缩: <input class="switch-btn switch-btn-animbg" type="checkbox" checked id="telescopic"></div>
@@ -46,7 +46,7 @@
                             <option value="part" selected>局部</option>
                             <option value="all">全部</option>
                         </select>
-                        <img :src="imgList.popup" class="changeMenu" title="地图切换">
+                        <img :src="imgList.igis_popup" class="changeMenu" title="地图切换">
                         <img :src="imgList.menu_nav" class="moreMenu" title="更多信息">
                     </div>
                     <div class="lnglatBox">
@@ -185,7 +185,16 @@
                     feat_batch: 'img/igis_fea_batch.png',
                     feat_import: 'img/igis_fea_import.png',
                     feat_save: 'img/igis_fea_save.png',
-                    popup: 'img/igis_popup.png'
+                    igis_popup: 'img/igis_popup.png',
+					igis_icon: 'img/igis_icon.png',
+					igis_line: 'img/igis_line.png',
+					igis_circle: 'img/igis_circle.png',
+					igis_three: 'img/igis_three.png',
+					igis_square: 'img/igis_square.png',
+					igis_five: 'img/igis_five.png',
+					igis_six: 'img/igis_six.png',
+					igis_serve: 'img/igis_six.png',
+					igis_polygon: 'img/igis_polygon.png',
                 },
                 lnglat: {
                     lng: '',
